@@ -1,14 +1,12 @@
-package org.example.DAO;
+package org.example.dao;
 
-import org.example.entity.User;
+import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.Assert.assertTrue;
-import org.junit.Test;
-
-public class UserDaoTest {
-
-    public UserDaoTest() {
+class UserDaoTest {
+    @Test
+    public void UserDaoTest() {
         assertTrue(true);
     }
 }

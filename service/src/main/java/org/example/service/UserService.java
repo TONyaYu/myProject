@@ -1,7 +1,7 @@
 package org.example.service;
 
 
-import org.example.DAO.UserDao;
+import org.example.dao.UserDao;
 import org.example.dto.UserDto;
 
 import java.util.Optional;

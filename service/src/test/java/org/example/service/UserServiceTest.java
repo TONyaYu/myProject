@@ -1,13 +1,11 @@
 package org.example.service;
 
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.Assert.assertTrue;
-import org.junit.Test;
-
-@Test
 class UserServiceTest {
 
-
+    @Test
     void getUserTest() {
         assertTrue(true);
     }
