@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  myProject:
+    image: postgres:latest
+    environment:
+      POSTGRESS_USER: postgres
+      POSTGRESS_PASSWORD: password
+      POSTGRESS_DB: postgres
+      POSTGRES_HOST_AUTH_METHOD: trust
+    ports:
+      - '5432:5432'
