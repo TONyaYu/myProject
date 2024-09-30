@@ -22,6 +22,8 @@ public class Review {
     private String comment;
     @Column(name = "review_date")
     private LocalDateTime reviewDate;
-    private Integer rideId;
-    private Integer clientId;
+    @ManyToOne
+    private Ride ride;
+    @ManyToOne
+    private User client;
 }

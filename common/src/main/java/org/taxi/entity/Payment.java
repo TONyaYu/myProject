@@ -25,5 +25,6 @@ public class Payment {
     @Enumerated(EnumType.STRING)
     @Column(name = "payment_method")
     private PayMethod paymentMethod;
-    private Integer rideId;
+    @OneToOne
+    private Ride ride;
 }

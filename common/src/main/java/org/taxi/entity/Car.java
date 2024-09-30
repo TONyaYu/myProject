@@ -22,5 +22,6 @@ public class Car {
     @Column(name = "license_plate")
     private String licensePlate;
     private boolean isAvailable;
-    private Integer driverId;
+    @OneToOne
+    private User driver;
 }
