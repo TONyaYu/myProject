@@ -1,10 +1,10 @@
 -- Создание таблицы пользователей
 CREATE TABLE users (
-                       id BIGSERIAL PRIMARY KEY,
-                       first_name VARCHAR(128),
-                       last_name VARCHAR(128),
-                       email VARCHAR(128) UNIQUE,
-                       password VARCHAR(255),
+                       id SERIAL PRIMARY KEY,
+                       first_name VARCHAR(128) NOT NULL,
+                       last_name VARCHAR(128) NOT NULL,
+                       email VARCHAR(128) UNIQUE NOT NULL,
+                       password VARCHAR(255) NOT NULL,
                        phone VARCHAR(20),
                        role VARCHAR(32),
                        status BOOLEAN
@@ -12,24 +12,24 @@ CREATE TABLE users (
 
 -- Создание таблицы автомобилей
 CREATE TABLE car (
-                     id BIGSERIAL PRIMARY KEY,
-                     driver_id INT,
-                     make VARCHAR(128),
-                     model VARCHAR(128),
-                     license_plate VARCHAR(20) UNIQUE,
-                     status BOOLEAN,
+                     id SERIAL PRIMARY KEY,
+                     driver_id INT NOT NULL,
+                     make VARCHAR(128) NOT NULL,
+                     model VARCHAR(128) NOT NULL,
+                     license_plate VARCHAR(20) UNIQUE NOT NULL,
+                     is_available BOOLEAN,
                      FOREIGN KEY (driver_id) REFERENCES users(id)
 );
 
 -- Создание таблицы поездок
 CREATE TABLE ride (
                       id SERIAL PRIMARY KEY,
-                      client_id INT,
-                      driver_id INT,
-                      start_location VARCHAR(255),
-                      end_location VARCHAR(255),
-                      start_date TIMESTAMP,
-                      end_date TIMESTAMP,
+                      client_id INT NOT NULL,
+                      driver_id INT NOT NULL,
+                      start_location VARCHAR(255) NOT NULL,
+                      end_location VARCHAR(255) NOT NULL,
+                      start_date TIMESTAMP NOT NULL,
+                      end_date TIMESTAMP NOT NULL,
                       status VARCHAR(100),
                       cost DECIMAL(10, 2),
                       FOREIGN KEY (client_id) REFERENCES users(id),
@@ -38,19 +38,19 @@ CREATE TABLE ride (
 
 -- Создание таблицы платежей
 CREATE TABLE payment (
-                         id BIGSERIAL PRIMARY KEY,
-                         ride_id INT,
-                         amount DECIMAL(10, 2),
+                         id SERIAL PRIMARY KEY,
+                         ride_id INT NOT NULL,
+                         amount DECIMAL(10, 2) NOT NULL,
                          date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                         payment_method VARCHAR(50),
+                         payment_method VARCHAR(50) NOT NULL,
                          FOREIGN KEY (ride_id) REFERENCES Ride(id)
 );
 
 -- Создание таблицы отзывов
 CREATE TABLE review (
-                        id BIGSERIAL PRIMARY KEY,
-                        ride_id INT,
-                        client_id INT,
+                        id SERIAL PRIMARY KEY,
+                        ride_id INT NOT NULL,
+                        client_id INT NOT NULL,
                         rating INT,
                         comment TEXT,
                         review_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -59,3 +59,7 @@ CREATE TABLE review (
 );
 
 DROP TABLE users;
+DROP TABLE car;
+DROP TABLE ride;
+DROP TABLE payment;
+DROP TABLE review;
