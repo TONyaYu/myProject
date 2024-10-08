@@ -26,5 +26,6 @@ public class Payment {
     @Column(name = "payment_method")
     private PayMethod paymentMethod;
     @OneToOne
+    @JoinColumn(name = "ride_id")
     private Ride ride;
 }

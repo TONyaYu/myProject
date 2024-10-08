@@ -31,7 +31,7 @@ public class Ride {
     private RideStatus status;
     private BigDecimal cost;
     @ManyToOne
-    private User client;
+    private User user;
     @ManyToOne
     private User driver;
 

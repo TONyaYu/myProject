@@ -30,6 +30,7 @@
                 <artifactId>hibernate-core</artifactId>
                 <version>6.6.1.Final</version>
             </dependency>
+
             <dependency>
                 <groupId>org.postgresql</groupId>
                 <artifactId>postgresql</artifactId>
@@ -40,7 +41,7 @@
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
                 <version>1.18.32</version>
-                <scope>provided</scope>
+                <scope>compile</scope>
             </dependency>
             <dependency>
                 <groupId>org.slf4j</groupId>
@@ -80,17 +81,6 @@
 
         </dependencies>
     </dependencyManagement>
-    <dependencies>
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate.orm</groupId>
-            <artifactId>hibernate-core</artifactId>
-        </dependency>
-    </dependencies>
 
     <build>
         <pluginManagement>
@@ -122,12 +112,9 @@
                             <path>
                                 <groupId>org.projectlombok</groupId>
                                 <artifactId>lombok</artifactId>
+                                <version>1.18.32</version>
                             </path>
                         </annotationProcessorPaths>
-                        <excludes>
-                            <exclude>common</exclude>
-                            <exclude>service</exclude>
-                        </excludes>
                     </configuration>
                 </plugin>
                 <plugin>

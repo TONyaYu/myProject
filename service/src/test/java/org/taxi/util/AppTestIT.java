@@ -24,14 +24,14 @@ public class AppTestIT {
 
     @BeforeEach
     void  openSession() {
-        session.getTransaction().rollback();
-        session.close();
+        session = sessionFactory.openSession();
+        session.beginTransaction();
     }
 
     @AfterEach
     void  closeSession() {
-        session = sessionFactory.openSession();
-        session.beginTransaction();
+        session.getTransaction().rollback();
+        session.close();
     }
 
     @AfterAll
@@ -49,11 +49,11 @@ public class AppTestIT {
                 .build();
         session.persist(user);
         session.flush();
-        session.clear();
 
+        session.clear();
         User userActual = session.find(User.class, user.getId());
 
         assertEquals(user, userActual);
-
     }
 }
+

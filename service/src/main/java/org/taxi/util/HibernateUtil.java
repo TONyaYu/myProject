@@ -1,10 +1,10 @@
 package org.taxi.util;
 
 import lombok.experimental.UtilityClass;
+import org.taxi.entity.User;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy;
 import org.hibernate.cfg.Configuration;
-import org.taxi.entity.User;
 
 @UtilityClass
 public class HibernateUtil {
