@@ -22,8 +22,8 @@ public class Review {
     private String comment;
     @Column(name = "review_date")
     private LocalDateTime reviewDate;
-    @ManyToOne
+    @OneToOne
     private Ride ride;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private User client;
 }

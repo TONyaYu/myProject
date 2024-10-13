@@ -7,12 +7,16 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -37,5 +41,12 @@ public class User {
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
     private Boolean statusOfActivity;
+    @OneToMany
+    private List<Ride> rides;
+    @ManyToMany
+    private List<User> drivers;
+    @OneToMany
+    private List<Review> reviews;
 
 }
+

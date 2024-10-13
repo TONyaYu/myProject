@@ -43,7 +43,7 @@ CREATE TABLE payment (
                          amount DECIMAL(10, 2) NOT NULL,
                          date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                          payment_method VARCHAR(50) NOT NULL,
-                         FOREIGN KEY (ride_id) REFERENCES Ride(id)
+                         FOREIGN KEY (ride_id) REFERENCES ride(id)
 );
 
 -- Создание таблицы отзывов
@@ -54,7 +54,7 @@ CREATE TABLE review (
                         rating INT,
                         comment TEXT,
                         review_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                        FOREIGN KEY (ride_id) REFERENCES Ride(id),
+                        FOREIGN KEY (ride_id) REFERENCES ride(id),
                         FOREIGN KEY (client_id) REFERENCES users(id)
 );
 
