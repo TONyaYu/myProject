@@ -40,11 +40,12 @@ public class User {
     private String phone;
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
+    @Column(name = "status")
     private Boolean statusOfActivity;
     @OneToMany
     private List<Ride> rides;
     @ManyToMany
-    private List<User> drivers;
+    private List<Car> cars;
     @OneToMany
     private List<Review> reviews;
 
