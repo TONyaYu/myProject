@@ -30,7 +30,9 @@ public class Ride {
     @Enumerated(EnumType.STRING)
     private RideStatus status;
     private BigDecimal cost;
-    private Integer clientId;
-    private Integer driverId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User user;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User driver;
 
 }
