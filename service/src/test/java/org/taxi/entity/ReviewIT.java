@@ -46,7 +46,7 @@ class ReviewIT {
         Ride ride = TestObjectsUtils.getRide("work", "home");
         Review review = TestObjectsUtils.getReview(ride, client, "Excellent service");
 
-        session.save(review);
+        session.persist(review);
         session.clear();
 
         Assertions.assertNotNull(review.getId());
@@ -70,7 +70,7 @@ class ReviewIT {
 
         Review actualReview = session.find(Review.class, review3.getId());
 
-        assertEquals(review3.getId(), actualReview.getId());
+        Assertions.assertEquals(review3.getId(), actualReview.getId());
     }
 
     @Test
@@ -82,10 +82,10 @@ class ReviewIT {
         session.clear();
 
         review.setRating(4);
-        session.update(review);
+        session.merge(review);
 
         Review actualReview = session.find(Review.class, review.getId());
-        assertEquals(review.getRating(), actualReview.getRating());
+        Assertions.assertEquals(review.getRating(), actualReview.getRating());
     }
 
     @Test

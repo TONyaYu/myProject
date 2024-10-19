@@ -22,7 +22,7 @@ public class Review {
     private String comment;
     @Column(name = "review_date")
     private LocalDateTime reviewDate;
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     private Ride ride;
     @ManyToOne(fetch = FetchType.LAZY)
     private User client;

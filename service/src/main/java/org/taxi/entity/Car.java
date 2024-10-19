@@ -6,20 +6,26 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(of = "licensePlate")
+@ToString(exclude = "drivers")
 @Builder
 @Entity
 @Table(name = "car")
@@ -33,6 +39,7 @@ public class Car {
     @Column(name = "license_plate")
     private String licensePlate;
     private boolean isAvailable;
-    @ManyToMany(fetch = FetchType.LAZY)
-    private List<User> driver;
+    @Builder.Default
+    @OneToMany(fetch = FetchType.LAZY)
+    public List<UserCar> userCars;
 }

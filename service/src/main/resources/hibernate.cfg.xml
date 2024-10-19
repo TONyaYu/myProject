@@ -14,6 +14,7 @@
 
         <mapping class="org.taxi.entity.User" />
         <mapping class="org.taxi.entity.Car" />
+        <mapping class="org.taxi.entity.UserCar" />
         <mapping class="org.taxi.entity.Payment" />
         <mapping class="org.taxi.entity.Ride" />
         <mapping class="org.taxi.entity.Review" />

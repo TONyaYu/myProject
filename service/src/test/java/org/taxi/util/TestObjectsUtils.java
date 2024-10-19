@@ -1,5 +1,7 @@
 package org.taxi.util;
 
+import org.taxi.entity.PayMethod;
+import org.taxi.entity.Payment;
 import org.taxi.entity.Review;
 import org.taxi.entity.Ride;
 import org.taxi.entity.RideStatus;
@@ -52,6 +54,15 @@ public class TestObjectsUtils {
                 .ride(ride)
                 .reviewDate(LocalDateTime.now())
                 .client(client)
+                .build();
+    }
+
+    public static Payment getPayment(Ride ride) {
+        return Payment.builder()
+                .paymentMethod(PayMethod.CASH)
+                .amount(BigDecimal.valueOf(1.17))
+                .date(LocalDateTime.now())
+                .ride(ride)
                 .build();
     }
 }
