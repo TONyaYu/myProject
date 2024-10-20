@@ -1,32 +1,31 @@
 package org.taxi.entity;
 
-
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "users")
-public class User {
+@Table(name = "payment")
+public class Payment {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "first_name")
-    private String firstName;
-    @Column(name = "last_name")
-    private String lastName;
-    @Column(unique = true)
-    private String email;
-    private String password;
-    private String phone;
+    private BigDecimal amount;
+    private LocalDateTime date;
     @Enumerated(EnumType.STRING)
-    private UserRole userRole;
-    private Boolean statusOfActivity;
-
+    @Column(name = "payment_method")
+    private PayMethod paymentMethod;
+    @OneToOne
+    @JoinColumn(name = "ride_id")
+    private Ride ride;
 }
