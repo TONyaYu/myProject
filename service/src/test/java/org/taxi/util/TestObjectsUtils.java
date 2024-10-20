@@ -1,12 +1,6 @@
 package org.taxi.util;
 
-import org.taxi.entity.PayMethod;
-import org.taxi.entity.Payment;
-import org.taxi.entity.Review;
-import org.taxi.entity.Ride;
-import org.taxi.entity.RideStatus;
-import org.taxi.entity.User;
-import org.taxi.entity.UserRole;
+import org.taxi.entity.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -32,6 +26,15 @@ public class TestObjectsUtils {
                 .password("client1")
                 .phone("16379872")
                 .userRole(UserRole.DRIVER)
+                .build();
+    }
+
+    public static Car getCar(String model, String license) {
+        return Car.builder()
+                .make("BMW")
+                .model(model)
+                .licensePlate(license)
+                .isAvailable(true)
                 .build();
     }
 

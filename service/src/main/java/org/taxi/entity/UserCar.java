@@ -29,4 +29,14 @@ public class UserCar {
     @ManyToOne
     @JoinColumn(name = "car_id")
     private Car car;
+
+    public void setUser(User user) {
+        this.user = user;
+        this.user.getUserCars().add(this);
+    }
+
+    public void setCar(Car car) {
+        this.car = car;
+        this.car.getUserCars().add(this);
+    }
 }

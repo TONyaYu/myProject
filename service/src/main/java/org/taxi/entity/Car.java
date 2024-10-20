@@ -25,7 +25,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "licensePlate")
-@ToString(exclude = "drivers")
+@ToString(exclude = "userCars")
 @Builder
 @Entity
 @Table(name = "car")
@@ -39,7 +39,6 @@ public class Car {
     @Column(name = "license_plate")
     private String licensePlate;
     private boolean isAvailable;
-    @Builder.Default
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "car")
     public List<UserCar> userCars;
 }

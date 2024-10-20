@@ -10,11 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
@@ -22,7 +18,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@EqualsAndHashCode(exclude = "id")
+@ToString(exclude = {"rides", "reviews", "userCars"})
+@EqualsAndHashCode(of = {"email", "phone", "lastName", "firstName"})
 @Entity
 @Table(name = "users")
 public class User {
@@ -44,7 +41,7 @@ public class User {
     private Boolean isAnable;
     @OneToMany
     private List<Ride> rides;
-    @OneToMany
+    @OneToMany(mappedBy = "user")
     private List<UserCar> userCars;
     @OneToMany
     private List<Review> reviews;

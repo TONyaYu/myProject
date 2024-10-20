@@ -21,5 +21,6 @@
         <mapping class="org.taxi.entity.Payment" />
         <mapping class="org.taxi.entity.Ride" />
         <mapping class="org.taxi.entity.Review" />
+        <mapping class="org.taxi.entity.UserCar" />
     </session-factory>
 </hibernate-configuration>
