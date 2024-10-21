@@ -12,6 +12,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -40,11 +41,11 @@ public class User {
     @Column(name = "is_anable")
     private Boolean isAnable;
     @OneToMany
-    private List<Ride> rides;
+    private List<Ride> rides = new ArrayList<>();
     @OneToMany(mappedBy = "user")
-    private List<UserCar> userCars;
+    private List<UserCar> userCars = new ArrayList<>();
     @OneToMany
-    private List<Review> reviews;
+    private List<Review> reviews = new ArrayList<>();
 
 }
 

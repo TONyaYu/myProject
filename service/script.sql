@@ -23,7 +23,7 @@ CREATE TABLE car (
 
 -- Создание таблицы поездок
 CREATE TABLE ride (
-                      id SERIAL PRIMARY KEY,
+                      id SERIAL PRIMARY KEY UNIQUE,
                       client_id INT NOT NULL,
                       driver_id INT NOT NULL,
                       start_location VARCHAR(255) NOT NULL,

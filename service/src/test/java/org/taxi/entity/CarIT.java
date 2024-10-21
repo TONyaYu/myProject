@@ -5,7 +5,8 @@ import org.hibernate.SessionFactory;
 import org.junit.jupiter.api.*;
 import org.taxi.util.HibernateTestUtil;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class CarIT {
 
@@ -18,13 +19,13 @@ class CarIT {
     }
 
     @BeforeEach
-    void  openSession() {
+    void openSession() {
         session = sessionFactory.openSession();
         session.beginTransaction();
     }
 
     @AfterEach
-    void  closeSession() {
+    void closeSession() {
         session.getTransaction().rollback();
         session.close();
     }
