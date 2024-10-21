@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Data
@@ -13,15 +14,18 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "review")
-public class Review {
+@Table(name = "payment")
+public class Payment {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private int rating; // 1-5
-    private String comment;
-    @Column(name = "review_date")
-    private LocalDateTime reviewDate;
-    private Integer rideId;
-    private Integer clientId;
+    private BigDecimal amount;
+    private LocalDateTime date;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "payment_method")
+    private PayMethod paymentMethod;
+    @OneToOne
+    @JoinColumn(name = "ride_id")
+    private Ride ride;
 }

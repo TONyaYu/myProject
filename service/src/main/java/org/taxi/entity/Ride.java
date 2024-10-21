@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -30,7 +32,10 @@ public class Ride {
     @Enumerated(EnumType.STRING)
     private RideStatus status;
     private BigDecimal cost;
-    private Integer clientId;
-    private Integer driverId;
-
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User user;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User driver;
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<Review> reviews = new ArrayList<>();
 }
