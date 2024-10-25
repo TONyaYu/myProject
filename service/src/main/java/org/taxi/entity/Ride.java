@@ -39,3 +39,4 @@ public class Ride {
     @OneToMany(fetch = FetchType.LAZY)
     private List<Review> reviews = new ArrayList<>();
 }
+

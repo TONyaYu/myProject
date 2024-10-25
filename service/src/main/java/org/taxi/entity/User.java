@@ -40,11 +40,11 @@ public class User {
     private UserRole userRole;
     @Column(name = "is_anable")
     private Boolean isAnable;
-    @OneToMany
+    @OneToMany(mappedBy = "user")
     private List<Ride> rides = new ArrayList<>();
     @OneToMany(mappedBy = "user")
     private List<UserCar> userCars = new ArrayList<>();
-    @OneToMany
+    @OneToMany(mappedBy = "user")
     private List<Review> reviews = new ArrayList<>();
 
 }
