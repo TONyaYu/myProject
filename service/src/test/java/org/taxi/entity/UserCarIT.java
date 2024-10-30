@@ -3,34 +3,11 @@ package org.taxi.entity;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.junit.jupiter.api.*;
+import org.taxi.util.AbstractHibernateTest;
 import org.taxi.util.HibernateTestUtil;
 import org.taxi.util.TestObjectsUtils;
 
-class UserCarIT {
-    private static SessionFactory sessionFactory;
-    private Session session;
-
-    @BeforeAll
-    static void createSessionFactory() {
-        sessionFactory = HibernateTestUtil.buildSessionFactory();
-    }
-
-    @BeforeEach
-    void  openSession() {
-        session = sessionFactory.openSession();
-        session.beginTransaction();
-    }
-
-    @AfterEach
-    void  closeSession() {
-        session.getTransaction().rollback();
-        session.close();
-    }
-
-    @AfterAll
-    static void closeSessionFactory() {
-        sessionFactory.close();
-    }
+class UserCarIT extends AbstractHibernateTest {
 
     @Test
     void check() {

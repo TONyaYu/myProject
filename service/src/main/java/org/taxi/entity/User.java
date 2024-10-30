@@ -40,10 +40,13 @@ public class User {
     private UserRole userRole;
     @Column(name = "is_anable")
     private Boolean isAnable;
+    @Builder.Default
     @OneToMany(mappedBy = "user")
     private List<Ride> rides = new ArrayList<>();
+    @Builder.Default
     @OneToMany(mappedBy = "user")
     private List<UserCar> userCars = new ArrayList<>();
+    @Builder.Default
     @OneToMany(mappedBy = "user")
     private List<Review> reviews = new ArrayList<>();
 

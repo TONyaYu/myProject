@@ -36,6 +36,7 @@ public class Ride {
     private User user;
     @ManyToOne(fetch = FetchType.LAZY)
     private User driver;
+    @Builder.Default
     @OneToMany(fetch = FetchType.LAZY)
     private List<Review> reviews = new ArrayList<>();
 }
