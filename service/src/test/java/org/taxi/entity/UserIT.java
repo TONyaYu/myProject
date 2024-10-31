@@ -1,19 +1,12 @@
 package org.taxi.entity;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.taxi.util.AbstractHibernateTest;
-import org.taxi.util.HibernateTestUtil;
 import org.taxi.util.TestObjectsUtils;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 class UserIT extends AbstractHibernateTest {
 
@@ -29,8 +22,8 @@ class UserIT extends AbstractHibernateTest {
                 .userRole(UserRole.DRIVER)
                 .build();
 
-        session.save(ride);
-        session.save(driver);
+        session.persist(ride);
+        session.persist(driver);
         session.clear();
 
         Assertions.assertNotNull(driver.getId());

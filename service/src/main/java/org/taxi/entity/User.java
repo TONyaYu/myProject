@@ -38,8 +38,6 @@ public class User {
     private String phone;
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
-    @Column(name = "is_anable")
-    private Boolean isAnable;
     @Builder.Default
     @OneToMany(mappedBy = "user")
     private List<Ride> rides = new ArrayList<>();
