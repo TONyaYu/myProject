@@ -38,6 +38,7 @@ public class Car {
     @Column(name = "license_plate")
     private String licensePlate;
     private boolean isAvailable;
-    @OneToMany(mappedBy = "car")
+    @OneToMany(fetch = FetchType.LAZY,
+            mappedBy = "car")
     public List<UserCar> userCars;
 }

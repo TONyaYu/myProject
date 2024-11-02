@@ -59,7 +59,7 @@ class PaymentIT extends AbstractHibernateTest {
         session.persist(payment2);
         session.clear();
 
-        Payment actualPayment = session.find(Payment.class, payment2);
+        Payment actualPayment = session.find(Payment.class, payment2.getId());
         assertEquals(payment2.getId(), actualPayment.getId());
     }
 
@@ -79,7 +79,7 @@ class PaymentIT extends AbstractHibernateTest {
         payment.setPaymentMethod(PayMethod.CARD);
         session.merge(payment);
 
-        Payment actualPayment = session.find(Payment.class, payment);
+        Payment actualPayment = session.find(Payment.class, payment.getId());
         Assertions.assertEquals(payment.getPaymentMethod(), actualPayment.getPaymentMethod());
     }
 
@@ -92,7 +92,7 @@ class PaymentIT extends AbstractHibernateTest {
         session.clear();
 
         session.remove(payment);
-        Payment actualPayment = session.find(Payment.class, payment);
+        Payment actualPayment = session.find(Payment.class, payment.getId());
         assertNull(actualPayment);
     }
 }

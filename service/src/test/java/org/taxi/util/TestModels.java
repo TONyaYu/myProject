@@ -18,35 +18,31 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @UtilityClass
-public class TestModels {
+public class TestModels extends AbstractHibernateTest {
 
     public void importData(SessionFactory sessionFactory) {
         @Cleanup Session session = sessionFactory.openSession();
 
-        Ride ride1 = null;
-        Ride ride2 = null;
-        Ride ride3 = null;
-        Ride ride4 = null;
-        User tomSoyer = saveUser(session, "Tom", "Soyer", "895454121", "toms@gmail.com", ride1, UserRole.DRIVER, "Qeexf12lk");
-        User aliceJohnson = saveUser(session, "Alice", "Johnson", "895454122", "alice@gmail.com", ride1, UserRole.CLIENT, "Passw0rd1");
-        User bobSmith = saveUser(session, "Bob", "Smith", "895454123", "bob@gmail.com", ride2, UserRole.DRIVER, "SecurePwd2");
-        User charlieBrown = saveUser(session, "Charlie", "Brown", "895454124", "charlie@gmail.com", ride2, UserRole.CLIENT, "P@ssw0rd3");
-        User dianaRoss = saveUser(session, "Diana", "Ross", "895454125", "diana@gmail.com", ride3, UserRole.DRIVER, "Secret4");
-        User edwardNorton = saveUser(session, "Edward", "Norton", "895454126", "edward@gmail.com", ride3, UserRole.CLIENT, "Passw0rd5");
-        User fionaApple = saveUser(session, "Fiona", "Apple", "895454127", "fiona@gmail.com", ride4, UserRole.DRIVER, "P@ssw0rd6");
-        User georgeClooney = saveUser(session, "George", "Clooney", "895454128", "george@gmail.com", ride4, UserRole.CLIENT, "SecurePwd7");
-        User hannahMontana = saveUser(session, "Hannah", "Montana", "895454129", "hannah@gmail.com", ride1, UserRole.ADMIN, "Qeexf12lk8");
+        User tomSoyer = saveUser(session, "Tom", "Soyer", "895454121", "toms@gmail.com", UserRole.DRIVER, "Qeexf12lk");
+        User aliceJohnson = saveUser(session, "Alice", "Johnson", "895454122", "alice@gmail.com", UserRole.CLIENT, "Passw0rd1");
+        User bobSmith = saveUser(session, "Bob", "Smith", "895454123", "bob@gmail.com", UserRole.DRIVER, "SecurePwd2");
+        User charlieBrown = saveUser(session, "Charlie", "Brown", "895454124", "charlie@gmail.com", UserRole.CLIENT, "P@ssw0rd3");
+        User dianaRoss = saveUser(session, "Diana", "Ross", "895454125", "diana@gmail.com", UserRole.DRIVER, "Secret4");
+        User edwardNorton = saveUser(session, "Edward", "Norton", "895454126", "edward@gmail.com", UserRole.CLIENT, "Passw0rd5");
+        User fionaApple = saveUser(session, "Fiona", "Apple", "895454127", "fiona@gmail.com", UserRole.DRIVER, "P@ssw0rd6");
+        User georgeClooney = saveUser(session, "George", "Clooney", "895454128", "george@gmail.com", UserRole.CLIENT, "SecurePwd7");
+        User hannahMontana = saveUser(session, "Hannah", "Montana", "895454129", "hannah@gmail.com", UserRole.ADMIN, "Qeexf12lk8");
 
-        ride1 = saveRide(session, aliceJohnson, tomSoyer, new BigDecimal("15.00"), "Home", "Work",
+        Ride ride1 = saveRide(session, aliceJohnson, tomSoyer, new BigDecimal("15.00"), "Home", "Work",
                 LocalDateTime.of(2024, 10, 30, 8, 0), LocalDateTime.of(2024, 10, 30, 8, 30), RideStatus.COMPLETED);
 
-        ride2 = saveRide(session, charlieBrown, bobSmith, new BigDecimal("20.00"), "Airport", "Hotel",
+        Ride ride2 = saveRide(session, charlieBrown, bobSmith, new BigDecimal("20.00"), "Airport", "Hotel",
                 LocalDateTime.of(2024, 10, 30, 10, 0), LocalDateTime.of(2024, 10, 30, 10, 45), RideStatus.IN_PROGRESS);
 
-        ride3 = saveRide(session, edwardNorton, dianaRoss, new BigDecimal("12.50"), "Office", "Home",
+        Ride ride3 = saveRide(session, edwardNorton, dianaRoss, new BigDecimal("12.50"), "Office", "Home",
                 LocalDateTime.of(2024, 10, 30, 18, 0), LocalDateTime.of(2024, 10, 30, 18, 30), RideStatus.PLANNED);
 
-        ride4 = saveRide(session, georgeClooney, fionaApple, new BigDecimal("25.00"), "Mall", "Cinema",
+        Ride ride4 = saveRide(session, georgeClooney, fionaApple, new BigDecimal("25.00"), "Mall", "Cinema",
                 LocalDateTime.of(2024, 10, 30, 20, 0), LocalDateTime.of(2024, 10, 30, 20, 30), RideStatus.COMPLETED);
 
         Car camry = saveCar(session, tomSoyer, "Toyota", "Camry", "ABC123", true);
@@ -81,7 +77,7 @@ public class TestModels {
         return car;
     }
 
-    private User saveUser(Session session, String name, String lastName, String phone, String email, Ride ride, UserRole role, String pswrd) {
+    private User saveUser(Session session, String name, String lastName, String phone, String email, UserRole role, String pswrd) {
         User user = User.builder()
                 .firstName(name)
                 .lastName(lastName)
