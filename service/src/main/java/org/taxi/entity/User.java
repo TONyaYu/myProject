@@ -23,7 +23,7 @@ import java.util.List;
 @EqualsAndHashCode(of = {"email", "phone", "lastName", "firstName"})
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements BaseEntity<Long> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,5 +48,9 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Review> reviews = new ArrayList<>();
 
+    @Override
+    public Long getID() {
+        return this.id;
+    }
 }
 

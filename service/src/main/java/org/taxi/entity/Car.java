@@ -29,16 +29,25 @@ import java.util.List;
 @Builder
 @Entity
 @Table(name = "car")
-public class Car {
+public class Car implements Comparable<Car>, BaseEntity<Long> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String make;
     private String model;
-    @Column(name = "license_plate")
+    @Column(unique = true,
+            name = "license_plate")
     private String licensePlate;
     private boolean isAvailable;
     @OneToMany(fetch = FetchType.LAZY,
             mappedBy = "car")
     public List<UserCar> userCars;
+    @Override
+    public int compareTo(Car o) {
+        return licensePlate.compareTo(o.licensePlate);
+    }
+    @Override
+    public Long getID() {
+        return this.id;
+    }
 }
