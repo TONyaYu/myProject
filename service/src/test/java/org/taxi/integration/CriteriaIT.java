@@ -1,18 +1,10 @@
 package org.taxi.integration;
 
 import jakarta.persistence.criteria.JoinType;
-import org.hibernate.Session;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.taxi.entity.PayMethod;
-import org.taxi.entity.Payment;
-import org.taxi.entity.Payment_;
-import org.taxi.entity.Review_;
-import org.taxi.entity.Ride;
-import org.taxi.entity.RideStatus;
-import org.taxi.entity.Ride_;
-import org.taxi.entity.User_;
+import org.taxi.entity.*;
 import org.taxi.util.AbstractHibernateTest;
 import org.taxi.util.TestModels;
 
@@ -37,7 +29,7 @@ public class CriteriaIT extends AbstractHibernateTest {
     }
 
     @Test
-    private void filterPayments() {
+    void filterPayments() {
         //клиент
         //получения информации об оплатах по месту отправления, месту завершения поездки, водителю и способу оплаты
         var cb = session.getCriteriaBuilder();
@@ -62,7 +54,7 @@ public class CriteriaIT extends AbstractHibernateTest {
     }
 
     @Test
-    private void filterRides() {
+    void filterRides() {
         //возвращает список поездок по дате, проставленному рейтингу, статусу, стоимости, водителю
         var cb = session.getCriteriaBuilder();
 
@@ -86,7 +78,7 @@ public class CriteriaIT extends AbstractHibernateTest {
     }
 
     @Test
-    private void filterByOrder() {
+    void filterByOrder() {
         //водитель
         //показывает информацию о заказе: стоимость, адрес отправления/посадки, адрес назначения, клиент
         var cb = session.getCriteriaBuilder();
@@ -111,7 +103,7 @@ public class CriteriaIT extends AbstractHibernateTest {
     }
 
     @Test
-    private void filterDailyOrders() {
+    void filterDailyOrders() {
         //админ
         //посмотреть все заказы за день, по водителю, стоимости.
         var cb = session.getCriteriaBuilder();
