@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @Builder
 @Entity
 @Table(name = "review")
-public class Review {
+public class Review implements BaseEntity<Long> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -26,4 +26,9 @@ public class Review {
     private Ride ride;
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
+
+    @Override
+    public Long getId() {
+        return this.id;
+    }
 }

@@ -17,7 +17,7 @@ import java.util.List;
 @Builder
 @Entity
 @Table(name = "ride")
-public class Ride {
+public class Ride implements BaseEntity<Long> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -39,5 +39,10 @@ public class Ride {
     @Builder.Default
     @OneToMany(fetch = FetchType.LAZY)
     private List<Review> reviews = new ArrayList<>();
+
+    @Override
+    public Long getId() {
+        return this.id;
+    }
 }
 

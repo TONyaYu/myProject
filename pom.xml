@@ -21,7 +21,7 @@
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <junit.version>5.11.3</junit.version>
-        <hibernate.version>6.6.1.Final</hibernate.version>
+        <hibernate.version>6.3.0.Final</hibernate.version>
         <querydsl.version>5.0.0</querydsl.version>
         <assertj.version>3.26.3</assertj.version>
         <jakarta.version>3.0.0</jakarta.version>
@@ -60,11 +60,6 @@
                 <artifactId>querydsl-jpa</artifactId>
                 <version>${querydsl.version}</version>
                 <classifier>jakarta</classifier>
-            </dependency>
-            <dependency>
-                <groupId>javax.persistence</groupId>
-                <artifactId>javax.persistence-api</artifactId>
-                <version>2.2</version>
             </dependency>
             <dependency>
                 <groupId>jakarta.annotation</groupId>
@@ -157,7 +152,7 @@
                         <annotationProcessors>
                             <annotationProcessor>lombok.launch.AnnotationProcessorHider$AnnotationProcessor</annotationProcessor>
                             <annotationProcessor>com.querydsl.apt.jpa.JPAAnnotationProcessor</annotationProcessor>
-                            <annotationProcessor>org.hibernate.processor.HibernateProcessor</annotationProcessor>
+                            <annotationProcessor>org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor</annotationProcessor>
                         </annotationProcessors>
                         <annotationProcessorPaths>
                             <path>

@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @Builder
 @Entity
 @Table(name = "payment")
-public class Payment {
+public class Payment implements BaseEntity<Long> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,5 +28,11 @@ public class Payment {
     @OneToOne
     @JoinColumn(name = "ride_id")
     private Ride ride;
+
+    @Override
+    public Long getId() {
+        return this.id;
+    }
+
 }
 

@@ -49,7 +49,7 @@ public class User implements BaseEntity<Long> {
     private List<Review> reviews = new ArrayList<>();
 
     @Override
-    public Long getID() {
+    public Long getId() {
         return this.id;
     }
 }

@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @Entity
 @Table(name = "user_car")
-public class UserCar {
+public class UserCar implements BaseEntity<Long> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,5 +38,10 @@ public class UserCar {
     public void setCar(Car car) {
         this.car = car;
         this.car.getUserCars().add(this);
+    }
+
+    @Override
+    public Long getId() {
+        return this.id;
     }
 }

@@ -8,11 +8,18 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.graph.GraphSemantic;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.taxi.entity.*;
+import org.taxi.entity.PayMethod;
+import org.taxi.entity.Payment;
+import org.taxi.entity.QPayment;
+import org.taxi.entity.QReview;
+import org.taxi.entity.QRide;
+import org.taxi.entity.QUser;
+import org.taxi.entity.Ride;
+import org.taxi.entity.RideStatus;
+import org.taxi.entity.User;
 import org.taxi.util.AbstractHibernateTest;
 import org.taxi.util.TestModels;
 
-import javax.persistence.EntityManager;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -47,7 +54,7 @@ public class QueryDslIT extends AbstractHibernateTest {
                 .and(qPayment.ride.driver.eq(driver))
                 .and(qPayment.paymentMethod.eq(PayMethod.CASH));
 
-        List<Payment> payments = new JPAQuery<Payment>((EntityManager) session)
+        List<Payment> payments = new JPAQuery<Payment>(session)
                 .select(qPayment)
                 .join(qPayment.ride, qRide)
                 .join(qRide.driver, qUser)
@@ -87,7 +94,7 @@ public class QueryDslIT extends AbstractHibernateTest {
                 .and(qRide.cost.eq(BigDecimal.valueOf(15.00)))
                 .and(qRide.driver.eq(driver));
 
-        List<Ride> rides = new JPAQuery<Ride>((EntityManager) session)
+        List<Ride> rides = new JPAQuery<Ride>(session)
                 .select(qRide)
                 .join(qRide.reviews, qReview)
                 .join(qRide.driver, qUser)
@@ -119,7 +126,7 @@ public class QueryDslIT extends AbstractHibernateTest {
                 .and(qRide.endLocation.eq("Work"))
                 .and(qRide.user.eq(user));
 
-        List<Ride> rides = new JPAQuery<Ride>((EntityManager) session)
+        List<Ride> rides = new JPAQuery<Ride>(session)
                 .select(qRide)
                 .join(qRide.user, qUser)
                 .where(predicate)
@@ -149,7 +156,7 @@ public class QueryDslIT extends AbstractHibernateTest {
                 .and(qRide.driver.eq(driver))
                 .and(qRide.cost.eq(BigDecimal.valueOf(15.00)));
 
-        List<Ride> rides = new JPAQuery<Ride>((EntityManager) session)
+        List<Ride> rides = new JPAQuery<Ride>(session)
                 .select(qRide)
                 .join(qRide.driver, qUser)
                 .where(predicate)

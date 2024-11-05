@@ -1,6 +1,7 @@
 package org.taxi.integration;
 
 import jakarta.persistence.criteria.JoinType;
+import lombok.Cleanup;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -30,6 +31,7 @@ public class CriteriaIT extends AbstractHibernateTest {
 
     @Test
     void filterPayments() {
+        @Cleanup var session = sessionFactory.openSession();
         //клиент
         //получения информации об оплатах по месту отправления, месту завершения поездки, водителю и способу оплаты
         var cb = session.getCriteriaBuilder();
@@ -55,6 +57,7 @@ public class CriteriaIT extends AbstractHibernateTest {
 
     @Test
     void filterRides() {
+        @Cleanup var session = sessionFactory.openSession();
         //возвращает список поездок по дате, проставленному рейтингу, статусу, стоимости, водителю
         var cb = session.getCriteriaBuilder();
 
@@ -79,6 +82,7 @@ public class CriteriaIT extends AbstractHibernateTest {
 
     @Test
     void filterByOrder() {
+        @Cleanup var session = sessionFactory.openSession();
         //водитель
         //показывает информацию о заказе: стоимость, адрес отправления/посадки, адрес назначения, клиент
         var cb = session.getCriteriaBuilder();
@@ -104,6 +108,7 @@ public class CriteriaIT extends AbstractHibernateTest {
 
     @Test
     void filterDailyOrders() {
+        @Cleanup var session = sessionFactory.openSession();
         //админ
         //посмотреть все заказы за день, по водителю, стоимости.
         var cb = session.getCriteriaBuilder();
