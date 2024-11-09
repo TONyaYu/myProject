@@ -1,13 +1,11 @@
 package org.taxi.dao;
 
-import org.hibernate.SessionFactory;
+import jakarta.persistence.EntityManager;
 import org.taxi.entity.Review;
-
-import static org.taxi.entity.QReview.review;
 
 public class ReviewRepository extends RepositoryBase<Long, Review> {
 
-    public ReviewRepository(SessionFactory sessionFactory) {
-        super(Review.class, sessionFactory, review);
+    public ReviewRepository(EntityManager entityManager) {
+        super(Review.class, entityManager);
     }
 }

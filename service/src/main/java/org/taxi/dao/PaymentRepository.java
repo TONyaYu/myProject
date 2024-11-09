@@ -1,13 +1,33 @@
 package org.taxi.dao;
 
-import org.hibernate.SessionFactory;
+import com.querydsl.core.types.Predicate;
+import com.querydsl.jpa.impl.JPAQuery;
+import jakarta.persistence.EntityManager;
 import org.taxi.entity.Payment;
+import org.taxi.util.PaymentFilter;
+import org.taxi.util.QueryDslPredicate;
+
+import java.util.List;
 
 import static org.taxi.entity.QPayment.payment;
 
 public class PaymentRepository extends RepositoryBase<Long, Payment> {
+    public PaymentRepository(EntityManager entityManager) {
+        super(Payment.class, entityManager);
+    }
 
-    public PaymentRepository(SessionFactory sessionFactory) {
-        super(Payment.class, sessionFactory, payment);
+    public List<Payment> findAllPaymentByFilter(PaymentFilter filter) {
+        Predicate predicate = QueryDslPredicate.builder()
+                .add(filter.getDate(), payment.date::eq)
+                .add(filter.getAmount(), payment.amount::eq)
+                .add(filter.getRide(), payment.ride::eq)
+                .add(filter.getPayMethod(), payment.paymentMethod::eq)
+                .buildAnd();
+
+        return new JPAQuery<Payment>(getEntityManager())
+                .select(payment)
+                .from(payment)
+                .where(predicate)
+                .fetch();
     }
 }

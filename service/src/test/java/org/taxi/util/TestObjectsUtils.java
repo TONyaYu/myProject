@@ -1,13 +1,13 @@
 package org.taxi.util;
 
 import org.taxi.entity.Car;
-import org.taxi.entity.PayMethod;
+import org.taxi.entity.enums.PayMethod;
 import org.taxi.entity.Payment;
 import org.taxi.entity.Review;
 import org.taxi.entity.Ride;
-import org.taxi.entity.RideStatus;
+import org.taxi.entity.enums.RideStatus;
 import org.taxi.entity.User;
-import org.taxi.entity.UserRole;
+import org.taxi.entity.enums.UserRole;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

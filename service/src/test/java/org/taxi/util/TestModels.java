@@ -1,18 +1,16 @@
 package org.taxi.util;
 
-import lombok.Cleanup;
 import lombok.experimental.UtilityClass;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.taxi.entity.Car;
-import org.taxi.entity.PayMethod;
+import org.taxi.entity.enums.PayMethod;
 import org.taxi.entity.Payment;
 import org.taxi.entity.Review;
 import org.taxi.entity.Ride;
-import org.taxi.entity.RideStatus;
+import org.taxi.entity.enums.RideStatus;
 import org.taxi.entity.User;
 import org.taxi.entity.UserCar;
-import org.taxi.entity.UserRole;
+import org.taxi.entity.enums.UserRole;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -20,8 +18,7 @@ import java.time.LocalDateTime;
 @UtilityClass
 public class TestModels extends AbstractHibernateTest {
 
-    public void importData(SessionFactory sessionFactory) {
-        @Cleanup Session session = sessionFactory.openSession();
+    public void importData(Session session) {
 
         User tomSoyer = saveUser(session, "Tom", "Soyer", "895454121", "toms@gmail.com", UserRole.DRIVER, "Qeexf12lk");
         User aliceJohnson = saveUser(session, "Alice", "Johnson", "895454122", "alice@gmail.com", UserRole.CLIENT, "Passw0rd1");
@@ -45,10 +42,10 @@ public class TestModels extends AbstractHibernateTest {
         Ride ride4 = saveRide(session, georgeClooney, fionaApple, new BigDecimal("25.00"), "Mall", "Cinema",
                 LocalDateTime.of(2024, 10, 30, 20, 0), LocalDateTime.of(2024, 10, 30, 20, 30), RideStatus.COMPLETED);
 
-        Car camry = saveCar(session, tomSoyer, "Toyota", "Camry", "ABC123", true);
-        Car civic = saveCar(session, bobSmith, "Honda", "Civic", "XYZ789", false);
-        Car focus = saveCar(session, dianaRoss, "Ford", "Focus", "DEF456", true);
-        Car cruze = saveCar(session, fionaApple, "Chevrolet", "Cruze", "GHI789", false);
+        Car camry = saveCar(tomSoyer, "Toyota", "Camry", "ABC123", true);
+        Car civic = saveCar(bobSmith, "Honda", "Civic", "XYZ789", false);
+        Car focus = saveCar(dianaRoss, "Ford", "Focus", "DEF456", true);
+        Car cruze = saveCar(fionaApple, "Chevrolet", "Cruze", "GHI789", false);
 
         UserCar tomSoyerCamry = saveRelationUserCar(session, tomSoyer, camry);
         UserCar bobSmithCivic = saveRelationUserCar(session, bobSmith, civic);
@@ -66,7 +63,7 @@ public class TestModels extends AbstractHibernateTest {
         saveReview(session, georgeClooney, ride4, 2, "Недовольны обслуживанием.", LocalDateTime.of(2024, 10, 30, 21, 0));
     }
 
-    private Car saveCar(Session session, User driver, String firm, String model, String licence, boolean isAvailable) {
+    private Car saveCar(User driver, String firm, String model, String licence, boolean isAvailable) {
         Car car = Car.builder()
                 .make(firm)
                 .model(model)
@@ -116,7 +113,7 @@ public class TestModels extends AbstractHibernateTest {
     private Ride saveRide(Session session, User client, User driver, BigDecimal cost, String start,
                           String finish, LocalDateTime startDate, LocalDateTime endDate, RideStatus rideStatus) {
         Ride ride = Ride.builder()
-                .user(client)
+                .client(client)
                 .driver(driver)
                 .cost(cost)
                 .status(rideStatus)

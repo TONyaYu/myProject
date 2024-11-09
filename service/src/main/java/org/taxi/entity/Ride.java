@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.taxi.entity.enums.RideStatus;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -33,7 +34,7 @@ public class Ride implements BaseEntity<Long> {
     private RideStatus status;
     private BigDecimal cost;
     @ManyToOne(fetch = FetchType.LAZY)
-    private User user;
+    private User client;
     @ManyToOne(fetch = FetchType.LAZY)
     private User driver;
     @Builder.Default

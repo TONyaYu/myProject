@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.taxi.entity.enums.PayMethod;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
