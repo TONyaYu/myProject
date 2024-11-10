@@ -3,6 +3,7 @@ package org.taxi.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -25,7 +26,7 @@ public class Car implements Comparable<Car>, BaseEntity<Long> {
     private boolean isAvailable;
     @OneToMany(fetch = FetchType.LAZY,
             mappedBy = "car")
-    public List<UserCar> userCars;
+    public List<UserCar> userCars = new ArrayList<>();
 
     @Override
     public int compareTo(Car o) {
