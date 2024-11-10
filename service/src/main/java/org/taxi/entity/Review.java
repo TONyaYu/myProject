@@ -25,5 +25,5 @@ public class Review {
     @ManyToOne(fetch = FetchType.LAZY)
     private Ride ride;
     @ManyToOne(fetch = FetchType.LAZY)
-    private User client;
+    private User user;
 }

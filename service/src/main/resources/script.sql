@@ -6,24 +6,28 @@ CREATE TABLE users (
                        email VARCHAR(128) UNIQUE NOT NULL,
                        password VARCHAR(255) NOT NULL,
                        phone VARCHAR(20),
-                       role VARCHAR(32),
-                       status BOOLEAN
+                       role VARCHAR(32)
 );
 
 -- Создание таблицы автомобилей
 CREATE TABLE car (
                      id SERIAL PRIMARY KEY,
-                     driver_id INT NOT NULL,
                      make VARCHAR(128) NOT NULL,
                      model VARCHAR(128) NOT NULL,
                      license_plate VARCHAR(20) UNIQUE NOT NULL,
-                     is_available BOOLEAN,
-                     FOREIGN KEY (driver_id) REFERENCES users(id)
+                     is_available BOOLEAN
+);
+
+CREATE TABLE user_car
+(
+    id BIGSERIAL PRIMARY KEY ,
+    user_id BIGINT REFERENCES users(id),
+    car_id BIGINT REFERENCES car(id)
 );
 
 -- Создание таблицы поездок
 CREATE TABLE ride (
-                      id SERIAL PRIMARY KEY UNIQUE,
+                      id SERIAL PRIMARY KEY,
                       client_id INT NOT NULL,
                       driver_id INT NOT NULL,
                       start_location VARCHAR(255) NOT NULL,
@@ -58,8 +62,12 @@ CREATE TABLE review (
                         FOREIGN KEY (client_id) REFERENCES users(id)
 );
 
-DROP TABLE users;
+
+-- Удаление таблицы users со всеми связанными объектами
+DROP TABLE users CASCADE;
+
+DROP TABLE user_car;
 DROP TABLE car;
-DROP TABLE ride;
 DROP TABLE payment;
 DROP TABLE review;
+DROP TABLE ride;

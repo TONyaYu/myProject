@@ -29,3 +29,4 @@ public class Payment {
     @JoinColumn(name = "ride_id")
     private Ride ride;
 }
+
