@@ -44,7 +44,7 @@ public class User implements BaseEntity<Long> {
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
     @Builder.Default
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "client")
     private List<Ride> rides = new ArrayList<>();
     @Builder.Default
     @OneToMany(mappedBy = "user")

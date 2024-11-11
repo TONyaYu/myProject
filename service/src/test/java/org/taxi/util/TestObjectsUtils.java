@@ -49,8 +49,8 @@ public class TestObjectsUtils {
         return Ride.builder()
                 .startLocation(start)
                 .endLocation(end)
-                .startDate(LocalDateTime.now())
-                .endDate(LocalDateTime.now().plusHours(1).plusMinutes(30))
+                .startDate(LocalDateTime.of(2024, 10, 30, 10, 0))
+                .endDate(LocalDateTime.of(2024, 10, 30, 10, 30))
                 .status(RideStatus.COMPLETED)
                 .cost(BigDecimal.valueOf(2.45))
                 .build();

@@ -34,8 +34,10 @@ public class Ride implements BaseEntity<Long> {
     private RideStatus status;
     private BigDecimal cost;
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "client_id")
     private User client;
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "driver_id")
     private User driver;
     @Builder.Default
     @OneToMany(fetch = FetchType.LAZY)

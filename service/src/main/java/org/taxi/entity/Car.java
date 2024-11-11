@@ -26,6 +26,7 @@ public class Car implements Comparable<Car>, BaseEntity<Long> {
     private boolean isAvailable;
     @OneToMany(fetch = FetchType.LAZY,
             mappedBy = "car")
+    @Builder.Default
     public List<UserCar> userCars = new ArrayList<>();
 
     @Override

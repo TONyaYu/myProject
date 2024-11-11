@@ -1,4 +1,4 @@
-package org.taxi.dao;
+package org.taxi.integration;
 
 import com.querydsl.core.types.Predicate;
 import com.querydsl.jpa.impl.JPAQuery;
@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.taxi.dao.RideRepository;
 import org.taxi.entity.Ride;
 import org.taxi.entity.enums.RideStatus;
 import org.taxi.util.AbstractHibernateTest;
@@ -25,7 +26,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.taxi.entity.QRide.ride;
 
-class RideRepositoryIt extends AbstractHibernateTest {
+class RideRepositoryIT extends AbstractHibernateTest {
 
     private RideRepository rideRepository;
 
@@ -45,8 +46,9 @@ class RideRepositoryIt extends AbstractHibernateTest {
 
     @Test
     void update() {
-        Ride ride = TestObjectsUtils.getRide("Hotel", "Airport");
-        ride.setStartLocation("Work");
+        TestModels.importData(session);
+        Ride ride = session.createQuery("from Ride where startLocation = 'Home' and endLocation = 'Work'", Ride.class).uniqueResult();
+        ride.setStartLocation("Hotel");
 
         rideRepository.update(ride);
         session.clear();
@@ -59,7 +61,8 @@ class RideRepositoryIt extends AbstractHibernateTest {
 
     @Test
     void findById() {
-        Ride ride = rideRepository.save(TestObjectsUtils.getRide("Mall", "Cinema"));
+        TestModels.importData(session);
+        Ride ride = session.createQuery("from Ride where startLocation = 'Mall' and endLocation = 'Cinema'", Ride.class).uniqueResult();
         session.clear();
 
         Optional<Ride> actualRide = rideRepository.findById(ride.getId());
