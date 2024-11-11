@@ -9,7 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 
 import java.lang.reflect.Proxy;
 
-public abstract class AbstractHibernateTest {
+public abstract class AbstractTestBase {
 
     protected static SessionFactory sessionFactory;
     protected static Session session;

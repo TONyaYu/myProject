@@ -1,16 +1,15 @@
-package org.taxi.integration;
+package org.taxi.repository;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.taxi.dao.PaymentRepository;
 import org.taxi.entity.Payment;
 import org.taxi.entity.enums.PayMethod;
-import org.taxi.util.AbstractHibernateTest;
+import org.taxi.util.AbstractTestBase;
 import org.taxi.util.PaymentFilter;
-import org.taxi.util.TestModels;
+import org.taxi.util.TestModelsBase;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -19,14 +18,14 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class PaymentRepositoryIT extends AbstractHibernateTest {
+class PaymentRepositoryIT extends AbstractTestBase {
 
     private PaymentRepository paymentRepository;
 
     @BeforeEach
     void init() {
         paymentRepository = new PaymentRepository(session);
-        TestModels.importData(session); // Импортируем данные перед каждым тестом
+        TestModelsBase.importData(session); // Импортируем данные перед каждым тестом
     }
 
     @Test
