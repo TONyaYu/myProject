@@ -42,10 +42,10 @@ public class TestModelsBase extends AbstractTestBase {
         Ride ride4 = saveRide(session, georgeClooney, fionaApple, new BigDecimal("25.00"), "Mall", "Cinema",
                 LocalDateTime.of(2024, 10, 30, 20, 0), LocalDateTime.of(2024, 10, 30, 20, 30), RideStatus.COMPLETED);
 
-        Car camry = saveCar(tomSoyer, "Toyota", "Camry", "ABC123", true);
-        Car civic = saveCar(bobSmith, "Honda", "Civic", "XYZ789", false);
-        Car focus = saveCar(dianaRoss, "Ford", "Focus", "DEF456", true);
-        Car cruze = saveCar(fionaApple, "Chevrolet", "Cruze", "GHI789", false);
+        Car camry = saveCar(session, tomSoyer, "Toyota", "Camry", "ABC123", true);
+        Car civic = saveCar(session, bobSmith, "Honda", "Civic", "XYZ789", false);
+        Car focus = saveCar(session, dianaRoss, "Ford", "Focus", "DEF456", true);
+        Car cruze = saveCar(session, fionaApple, "Chevrolet", "Cruze", "GHI789", false);
 
         UserCar tomSoyerCamry = saveRelationUserCar(session, tomSoyer, camry);
         UserCar bobSmithCivic = saveRelationUserCar(session, bobSmith, civic);
@@ -63,7 +63,7 @@ public class TestModelsBase extends AbstractTestBase {
         saveReview(session, georgeClooney, ride4, 2, "Недовольны обслуживанием.", LocalDateTime.of(2024, 10, 30, 21, 0));
     }
 
-    private Car saveCar(User driver, String firm, String model, String licence, boolean isAvailable) {
+    private Car saveCar(Session session, User driver, String firm, String model, String licence, boolean isAvailable) {
         Car car = Car.builder()
                 .make(firm)
                 .model(model)

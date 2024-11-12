@@ -11,10 +11,12 @@ import org.taxi.util.QueryDslPredicate;
 import java.util.List;
 
 import static org.taxi.entity.QPayment.payment;
+import static org.taxi.entity.QRide.ride;
 
 @Repository
 public class PaymentRepository extends RepositoryBase<Long, Payment> {
     public PaymentRepository(EntityManager entityManager) {
+
         super(Payment.class, entityManager);
     }
 
@@ -22,7 +24,7 @@ public class PaymentRepository extends RepositoryBase<Long, Payment> {
         Predicate predicate = QueryDslPredicate.builder()
                 .add(filter.getDate(), payment.date::eq)
                 .add(filter.getAmount(), payment.amount::eq)
-                .add(filter.getRide(), payment.ride::eq)
+                .add(filter.getRideId(), ride.id::eq)
                 .add(filter.getPayMethod(), payment.paymentMethod::eq)
                 .buildAnd();
 

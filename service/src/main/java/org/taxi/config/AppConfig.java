@@ -13,7 +13,7 @@ import java.lang.reflect.Proxy;
 @ComponentScan("org.taxi")
 public class AppConfig {
 
-    @Bean
+    @Bean(destroyMethod = "close")
     public SessionFactory sessionFactory() {
         return HibernateUtil.buildSessionFactory();
     }

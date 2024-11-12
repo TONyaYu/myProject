@@ -15,8 +15,8 @@ public class RideFilter {
     LocalDateTime startDate;
     RideStatus status;
     BigDecimal cost;
-    User driver;
-    User client;
+    Long driverId;
+    Long clientId;
     String startLocation;
     String endLocation;
 

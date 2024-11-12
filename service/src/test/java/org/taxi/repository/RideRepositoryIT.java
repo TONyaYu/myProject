@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.taxi.entity.QUser;
 import org.taxi.entity.Ride;
 import org.taxi.entity.enums.RideStatus;
 import org.taxi.util.AbstractTestBase;
@@ -24,6 +25,7 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.taxi.entity.QRide.ride;
+import static org.taxi.entity.QUser.*;
 
 class RideRepositoryIT extends AbstractTestBase {
 
@@ -90,8 +92,8 @@ class RideRepositoryIT extends AbstractTestBase {
     void checkFindAllRidesByFilter(RideFilter filter, Integer expected) {
         TestModelsBase.importData(session);
         Predicate predicate = QueryDslPredicate.builder()
-                .add(filter.getClient(), ride.client::eq)
-                .add(filter.getDriver(), ride.driver::eq)
+                .add(filter.getClientId(), user.id::eq)
+                .add(filter.getDriverId(), user.id::eq)
                 .add(filter.getStartDate(), ride.startDate::eq)
                 .add(filter.getStatus(), ride.status::eq)
                 .add(filter.getCost(), ride.cost::eq)
@@ -148,8 +150,8 @@ class RideRepositoryIT extends AbstractTestBase {
                 // Фильтр по всем полям (нет результатов)
                 Arguments.of(
                         RideFilter.builder()
-                                .client(null)
-                                .driver(null)
+                                .clientId(null)
+                                .driverId(null)
                                 .startDate(LocalDateTime.of(2025, 1, 1, 0, 0))
                                 .status(RideStatus.PLANNED)
                                 .cost(BigDecimal.valueOf(100.00))

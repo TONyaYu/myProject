@@ -6,24 +6,25 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.taxi.config.AppConfig;
 
 import java.lang.reflect.Proxy;
 
 public abstract class AbstractTestBase {
 
-    protected static SessionFactory sessionFactory;
-    protected static Session session;
+    protected static AnnotationConfigApplicationContext applicationContext;
+    protected Session session;
 
     @BeforeAll
-    static void createSessionFactory() {
-        sessionFactory = HibernateTestUtil.buildSessionFactory();
-        session = (Session) Proxy.newProxyInstance(SessionFactory.class.getClassLoader(), new Class[]{Session.class},
-                (proxy, method, args) -> method.invoke(sessionFactory.getCurrentSession(), args));
-    }
+    static void createApplicationContext() {
+        applicationContext = new AnnotationConfigApplicationContext(AppConfig.class);
+        }
 
     @BeforeEach
     void openSession(){
-        session.beginTransaction();
+        session = applicationContext.getBean(Session.class);
+        session.getTransaction().begin();
     }
 
     @AfterEach
@@ -32,7 +33,7 @@ public abstract class AbstractTestBase {
     }
 
     @AfterAll
-    static void closeSessionFactory() {
-        sessionFactory.close();
+    static void closeApplicationContext() {
+        applicationContext.close();
     }
 }

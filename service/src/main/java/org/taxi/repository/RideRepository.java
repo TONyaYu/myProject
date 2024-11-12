@@ -11,6 +11,7 @@ import org.taxi.util.RideFilter;
 import java.util.List;
 
 import static org.taxi.entity.QRide.ride;
+import static org.taxi.entity.QUser.user;
 
 @Repository
 public class RideRepository extends RepositoryBase<Long, Ride> {
@@ -22,8 +23,8 @@ public class RideRepository extends RepositoryBase<Long, Ride> {
     public List<Ride> findAllRideByFilter(RideFilter filter) {
         Predicate predicate = QueryDslPredicate.builder()
                 .add(filter.getCost(), ride.cost::eq)
-                .add(filter.getClient(), ride.client::eq)
-                .add(filter.getDriver(), ride.driver::eq)
+                .add(filter.getClientId(), user.id::eq)
+                .add(filter.getDriverId(), user.id::eq)
                 .add(filter.getStartDate(), ride.startDate::eq)
                 .add(filter.getStartLocation(), ride.startLocation::eq)
                 .add(filter.getEndLocation(), ride.endLocation::eq)
