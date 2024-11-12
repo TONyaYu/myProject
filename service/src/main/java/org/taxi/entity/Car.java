@@ -33,9 +33,4 @@ public class Car implements Comparable<Car>, BaseEntity<Long> {
     public int compareTo(Car o) {
         return licensePlate.compareTo(o.licensePlate);
     }
-
-    public Long getId() {
-        return this.id;
-    }
-
 }

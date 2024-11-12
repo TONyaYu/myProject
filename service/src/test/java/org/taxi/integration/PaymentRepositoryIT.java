@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.taxi.dao.PaymentRepository;
+import org.taxi.repository.PaymentRepository;
 import org.taxi.entity.Payment;
 import org.taxi.entity.enums.PayMethod;
 import org.taxi.util.AbstractHibernateTest;
@@ -26,11 +26,16 @@ class PaymentRepositoryIT extends AbstractHibernateTest {
     @BeforeEach
     void init() {
         paymentRepository = new PaymentRepository(session);
-        TestModels.importData(session); // Импортируем данные перед каждым тестом
     }
 
     @Test
     void findAllPaymentByFilter() {
+        Payment expectedPayment = Payment.builder()
+                .paymentMethod(PayMethod.CASH)
+                .amount(new BigDecimal("15.00"))
+                .date(LocalDateTime.of(2024, 10, 30, 8, 30))
+                .build();
+        session.save(expectedPayment);
         // Создаем фильтр для поиска платежей
         PaymentFilter filter = PaymentFilter.builder()
                 .date(LocalDateTime.of(2024, 10, 30, 8, 30))
@@ -41,12 +46,13 @@ class PaymentRepositoryIT extends AbstractHibernateTest {
         List<Payment> payments = paymentRepository.findAllPaymentByFilter(filter);
 
         assertThat(payments).hasSize(1);
-        assertThat(payments.get(0).getAmount()).isEqualTo(new BigDecimal("15.00"));
+        assertThat(payments.get(0).getId()).isEqualTo(expectedPayment.getId());
     }
 
     @ParameterizedTest
     @MethodSource("getExpectedSize")
     void checkFindAllPaymentsByFilter(PaymentFilter filter, Integer expected) {
+        TestModels.importData(session);
         List<Payment> payments = paymentRepository.findAllPaymentByFilter(filter);
 
         assertThat(payments).hasSize(expected);

@@ -1,4 +1,4 @@
-package org.taxi.dao;
+package org.taxi.repository;
 
 import jakarta.persistence.EntityManager;
 import org.taxi.entity.Car;

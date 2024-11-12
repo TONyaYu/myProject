@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Value
 @Builder
 public class PaymentFilter {
-    Ride ride;
+    Long rideId;
     LocalDateTime date;
     BigDecimal amount;
     PayMethod payMethod;
