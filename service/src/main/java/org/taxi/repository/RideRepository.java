@@ -17,6 +17,7 @@ import static org.taxi.entity.QUser.user;
 public class RideRepository extends RepositoryBase<Long, Ride> {
 
     public RideRepository(EntityManager entityManager) {
+
         super(Ride.class, entityManager);
     }
 
