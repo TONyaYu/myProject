@@ -1,4 +1,4 @@
-package org.taxi.entity;
+package org.taxi.entity.enums;
 
 public enum UserRole {
     CLIENT,

@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.taxi.entity.enums.PayMethod;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -15,7 +16,7 @@ import java.time.LocalDateTime;
 @Builder
 @Entity
 @Table(name = "payment")
-public class Payment {
+public class Payment implements BaseEntity<Long> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,5 +29,11 @@ public class Payment {
     @OneToOne
     @JoinColumn(name = "ride_id")
     private Ride ride;
+
+    @Override
+    public Long getId() {
+        return this.id;
+    }
+
 }
 

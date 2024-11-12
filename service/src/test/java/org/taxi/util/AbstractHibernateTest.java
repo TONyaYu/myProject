@@ -7,26 +7,28 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 
+import java.lang.reflect.Proxy;
+
 public abstract class AbstractHibernateTest {
 
     protected static SessionFactory sessionFactory;
-    protected Session session;
+    protected static Session session;
 
     @BeforeAll
     static void createSessionFactory() {
         sessionFactory = HibernateTestUtil.buildSessionFactory();
+        session = (Session) Proxy.newProxyInstance(SessionFactory.class.getClassLoader(), new Class[]{Session.class},
+                (proxy, method, args) -> method.invoke(sessionFactory.getCurrentSession(), args));
     }
 
     @BeforeEach
-    void openSession() {
-        session = sessionFactory.openSession();
+    void openSession(){
         session.beginTransaction();
     }
 
     @AfterEach
-    void closeSession() {
+    void closeSession(){
         session.getTransaction().rollback();
-        session.close();
     }
 
     @AfterAll

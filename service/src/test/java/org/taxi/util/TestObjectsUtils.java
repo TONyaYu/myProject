@@ -1,13 +1,13 @@
 package org.taxi.util;
 
 import org.taxi.entity.Car;
-import org.taxi.entity.PayMethod;
+import org.taxi.entity.enums.PayMethod;
 import org.taxi.entity.Payment;
 import org.taxi.entity.Review;
 import org.taxi.entity.Ride;
-import org.taxi.entity.RideStatus;
+import org.taxi.entity.enums.RideStatus;
 import org.taxi.entity.User;
-import org.taxi.entity.UserRole;
+import org.taxi.entity.enums.UserRole;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -49,8 +49,8 @@ public class TestObjectsUtils {
         return Ride.builder()
                 .startLocation(start)
                 .endLocation(end)
-                .startDate(LocalDateTime.now())
-                .endDate(LocalDateTime.now().plusHours(1).plusMinutes(30))
+                .startDate(LocalDateTime.of(2024, 10, 30, 10, 0))
+                .endDate(LocalDateTime.of(2024, 10, 30, 10, 30))
                 .status(RideStatus.COMPLETED)
                 .cost(BigDecimal.valueOf(2.45))
                 .build();

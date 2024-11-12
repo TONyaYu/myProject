@@ -1,6 +1,13 @@
 package org.taxi.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,7 +21,7 @@ import java.time.LocalDateTime;
 @Builder
 @Entity
 @Table(name = "review")
-public class Review {
+public class Review implements BaseEntity<Long> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -26,4 +33,9 @@ public class Review {
     private Ride ride;
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
+
+    @Override
+    public Long getId() {
+        return this.id;
+    }
 }

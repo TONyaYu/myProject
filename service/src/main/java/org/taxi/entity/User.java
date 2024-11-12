@@ -7,10 +7,15 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+import org.taxi.entity.enums.UserRole;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +28,7 @@ import java.util.List;
 @EqualsAndHashCode(of = {"email", "phone", "lastName", "firstName"})
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements BaseEntity<Long> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,7 +44,7 @@ public class User {
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
     @Builder.Default
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "client")
     private List<Ride> rides = new ArrayList<>();
     @Builder.Default
     @OneToMany(mappedBy = "user")
@@ -48,5 +53,9 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Review> reviews = new ArrayList<>();
 
+    @Override
+    public Long getId() {
+        return this.id;
+    }
 }
 

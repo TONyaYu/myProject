@@ -33,12 +33,7 @@
         <dependency>
             <groupId>com.querydsl</groupId>
             <artifactId>querydsl-jpa</artifactId>
-            <version>5.0.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>javax.persistence</groupId>
-            <artifactId>javax.persistence-api</artifactId>
+            <classifier>jakarta</classifier>
         </dependency>
         <dependency>
             <groupId>jakarta.annotation</groupId>
@@ -47,6 +42,14 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-params</artifactId>
         </dependency>
         <dependency>
             <groupId>org.mockito</groupId>
@@ -60,9 +63,7 @@
             <groupId>org.testcontainers</groupId>
             <artifactId>postgresql</artifactId>
         </dependency>
-
     </dependencies>
-
 
     <build>
         <plugins>
@@ -78,6 +79,10 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
             </plugin>
             <plugin>
                 <groupId>org.jacoco</groupId>
