@@ -2,6 +2,7 @@ package org.taxi.repository;
 
 import com.querydsl.core.types.Predicate;
 import com.querydsl.jpa.impl.JPAQuery;
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -74,6 +75,7 @@ class RideRepositoryIT extends AbstractTestBase {
     }
 
     @Test
+    @Transactional
     void findAll() {
         Ride ride1 = rideRepository.save(TestObjectsUtils.getRide("Mall", "Cinema"));
         Ride ride2 = rideRepository.save(TestObjectsUtils.getRide("Hotel", "Airport"));

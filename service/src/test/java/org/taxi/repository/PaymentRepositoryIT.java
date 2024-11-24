@@ -25,7 +25,7 @@ class PaymentRepositoryIT extends AbstractTestBase {
     @BeforeEach
     void init() {
         paymentRepository = new PaymentRepository(session);
-        TestModelsBase.importData(session); // Импортируем данные перед каждым тестом
+        TestModelsBase.importData(session);
     }
 
     @Test
