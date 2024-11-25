@@ -1,4 +1,4 @@
-package org.taxi.integration;
+package org.taxi.repository;
 
 import com.querydsl.core.types.Predicate;
 import com.querydsl.jpa.impl.JPAQuery;
@@ -8,13 +8,12 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.taxi.entity.QUser;
-import org.taxi.repository.RideRepository;
 import org.taxi.entity.Ride;
 import org.taxi.entity.enums.RideStatus;
-import org.taxi.util.AbstractHibernateTest;
+import org.taxi.util.AbstractTestBase;
 import org.taxi.util.QueryDslPredicate;
 import org.taxi.util.RideFilter;
-import org.taxi.util.TestModels;
+import org.taxi.util.TestModelsBase;
 import org.taxi.util.TestObjectsUtils;
 
 import java.math.BigDecimal;
@@ -28,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.taxi.entity.QRide.ride;
 import static org.taxi.entity.QUser.*;
 
-class RideRepositoryIT extends AbstractHibernateTest {
+class RideRepositoryIT extends AbstractTestBase {
 
     private RideRepository rideRepository;
 
@@ -48,7 +47,7 @@ class RideRepositoryIT extends AbstractHibernateTest {
 
     @Test
     void update() {
-        TestModels.importData(session);
+        TestModelsBase.importData(session);
         Ride ride = session.createQuery("from Ride where startLocation = 'Home' and endLocation = 'Work'", Ride.class).uniqueResult();
         ride.setStartLocation("Hotel");
 
@@ -63,7 +62,7 @@ class RideRepositoryIT extends AbstractHibernateTest {
 
     @Test
     void findById() {
-        TestModels.importData(session);
+        TestModelsBase.importData(session);
         Ride ride = session.createQuery("from Ride where startLocation = 'Mall' and endLocation = 'Cinema'", Ride.class).uniqueResult();
         session.clear();
 
@@ -91,7 +90,7 @@ class RideRepositoryIT extends AbstractHibernateTest {
     @ParameterizedTest
     @MethodSource("getExpectedSize")
     void checkFindAllRidesByFilter(RideFilter filter, Integer expected) {
-        TestModels.importData(session);
+        TestModelsBase.importData(session);
         Predicate predicate = QueryDslPredicate.builder()
                 .add(filter.getClientId(), user.id::eq)
                 .add(filter.getDriverId(), user.id::eq)
