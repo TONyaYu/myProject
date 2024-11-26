@@ -3,11 +3,13 @@ package org.taxi.repository;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.jpa.impl.JPAQuery;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.taxi.annotation.IT;
 import org.taxi.entity.QUser;
 import org.taxi.entity.Ride;
 import org.taxi.entity.enums.RideStatus;
@@ -28,6 +30,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.taxi.entity.QRide.ride;
 import static org.taxi.entity.QUser.*;
 
+@IT
+@RequiredArgsConstructor
 class RideRepositoryIT extends AbstractTestBase {
 
     private RideRepository rideRepository;

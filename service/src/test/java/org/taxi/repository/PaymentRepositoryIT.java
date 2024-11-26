@@ -1,10 +1,12 @@
 package org.taxi.repository;
 
+import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.taxi.annotation.IT;
 import org.taxi.entity.Payment;
 import org.taxi.entity.enums.PayMethod;
 import org.taxi.util.AbstractTestBase;
@@ -18,6 +20,8 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@IT
+@RequiredArgsConstructor
 class PaymentRepositoryIT extends AbstractTestBase {
 
     private PaymentRepository paymentRepository;

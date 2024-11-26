@@ -24,7 +24,6 @@ public class Payment implements BaseEntity<Long> {
     private BigDecimal amount;
     private LocalDateTime date;
     @Enumerated(EnumType.STRING)
-    @Column(name = "payment_method")
     private PayMethod paymentMethod;
     @OneToOne
     @JoinColumn(name = "ride_id")

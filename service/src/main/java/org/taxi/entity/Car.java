@@ -32,8 +32,7 @@ public class Car implements Comparable<Car>, BaseEntity<Long> {
     private Long id;
     private String make;
     private String model;
-    @Column(unique = true,
-            name = "license_plate")
+    @Column(unique = true)
     private String licensePlate;
     private boolean isAvailable;
     @OneToMany(fetch = FetchType.LAZY,
