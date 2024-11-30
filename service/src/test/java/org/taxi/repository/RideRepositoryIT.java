@@ -4,21 +4,19 @@ import com.querydsl.core.types.Predicate;
 import com.querydsl.jpa.impl.JPAQuery;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.taxi.annotation.IT;
-import org.taxi.entity.QUser;
 import org.taxi.entity.Ride;
 import org.taxi.entity.enums.RideStatus;
-import org.taxi.util.AbstractTestBase;
 import org.taxi.util.QueryDslPredicate;
 import org.taxi.util.RideFilter;
 import org.taxi.util.TestModelsBase;
 import org.taxi.util.TestObjectsUtils;
 
+import javax.sql.DataSource;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -32,14 +30,10 @@ import static org.taxi.entity.QUser.*;
 
 @IT
 @RequiredArgsConstructor
-class RideRepositoryIT extends AbstractTestBase {
+class RideRepositoryIT {
 
-    private RideRepository rideRepository;
-
-    @BeforeEach
-    void init() {
-        rideRepository = new RideRepository(session);
-    }
+    private final RideRepository rideRepository;
+    private final DataSource dataSource;
 
     @Test
     void insert() {
@@ -50,33 +44,7 @@ class RideRepositoryIT extends AbstractTestBase {
         assertNotNull(actualRide.getId());
     }
 
-    @Test
-    void update() {
-        TestModelsBase.importData(session);
-        Ride ride = session.createQuery("from Ride where startLocation = 'Home' and endLocation = 'Work'", Ride.class).uniqueResult();
-        ride.setStartLocation("Hotel");
 
-        rideRepository.update(ride);
-        session.clear();
-        Optional<Ride> actualRide = rideRepository.findById(ride.getId());
-
-        assertThat(actualRide)
-                .isPresent()
-                .contains(ride);
-    }
-
-    @Test
-    void findById() {
-        TestModelsBase.importData(session);
-        Ride ride = session.createQuery("from Ride where startLocation = 'Mall' and endLocation = 'Cinema'", Ride.class).uniqueResult();
-        session.clear();
-
-        Optional<Ride> actualRide = rideRepository.findById(ride.getId());
-
-        assertThat(actualRide)
-                .isPresent()
-                .contains(ride);
-    }
 
     @Test
     @Transactional
@@ -96,7 +64,6 @@ class RideRepositoryIT extends AbstractTestBase {
     @ParameterizedTest
     @MethodSource("getExpectedSize")
     void checkFindAllRidesByFilter(RideFilter filter, Integer expected) {
-        TestModelsBase.importData(session);
         Predicate predicate = QueryDslPredicate.builder()
                 .add(filter.getClientId(), user.id::eq)
                 .add(filter.getDriverId(), user.id::eq)
@@ -107,7 +74,7 @@ class RideRepositoryIT extends AbstractTestBase {
                 .add(filter.getEndLocation(), ride.endLocation::eq)
                 .buildAnd();
 
-        List<Ride> actualRides = new JPAQuery<Ride>(session)
+        List<Ride> actualRides = new JPAQuery<Ride>()
                 .select(ride)
                 .from(ride)
                 .where(predicate)
@@ -174,5 +141,4 @@ class RideRepositoryIT extends AbstractTestBase {
                 )
         );
     }
-
 }

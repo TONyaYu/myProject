@@ -1,7 +1,6 @@
 package org.taxi.repository;
 
 import lombok.RequiredArgsConstructor;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -9,10 +8,9 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.taxi.annotation.IT;
 import org.taxi.entity.Payment;
 import org.taxi.entity.enums.PayMethod;
-import org.taxi.util.AbstractTestBase;
 import org.taxi.util.PaymentFilter;
-import org.taxi.util.TestModelsBase;
 
+import javax.sql.DataSource;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -22,15 +20,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @IT
 @RequiredArgsConstructor
-class PaymentRepositoryIT extends AbstractTestBase {
+class PaymentRepositoryIT {
 
-    private PaymentRepository paymentRepository;
-
-    @BeforeEach
-    void init() {
-        paymentRepository = new PaymentRepository(session);
-        TestModelsBase.importData(session);
-    }
+    private final PaymentRepository paymentRepository;
+    private final DataSource dataSource;
 
     @Test
     void findAllPaymentByFilter() {
