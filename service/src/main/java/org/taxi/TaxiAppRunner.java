@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class TaxiAppRunner {
 
     public static void main(String[] args) {
-        SpringApplication.run(TaxiAppRunner.class);
+        SpringApplication.run(TaxiAppRunner.class, args);
     }
 }
 
