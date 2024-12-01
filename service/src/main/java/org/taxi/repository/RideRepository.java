@@ -21,7 +21,7 @@ public class RideRepository extends RepositoryBase<Long, Ride> {
         super(Ride.class, entityManager);
     }
 
-    public List<Ride> findAllRideByFilter(RideFilter filter) {
+    public List<Ride> findAllRidesByFilter(RideFilter filter) {
         Predicate predicate = QueryDslPredicate.builder()
                 .add(filter.getCost(), ride.cost::eq)
                 .add(filter.getClientId(), user.id::eq)

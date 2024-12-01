@@ -15,8 +15,8 @@ import static org.taxi.entity.QRide.ride;
 
 @Repository
 public class PaymentRepository extends RepositoryBase<Long, Payment> {
-    public PaymentRepository(EntityManager entityManager) {
 
+    public PaymentRepository(EntityManager entityManager) {
         super(Payment.class, entityManager);
     }
 

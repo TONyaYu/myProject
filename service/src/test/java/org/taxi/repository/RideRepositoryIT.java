@@ -1,8 +1,6 @@
 package org.taxi.repository;
 
-import com.querydsl.core.types.Predicate;
-import com.querydsl.jpa.impl.JPAQuery;
-import jakarta.transaction.Transactional;
+import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -10,77 +8,110 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.taxi.annotation.IT;
 import org.taxi.entity.Ride;
+import org.taxi.entity.User;
 import org.taxi.entity.enums.RideStatus;
-import org.taxi.util.QueryDslPredicate;
 import org.taxi.util.RideFilter;
-import org.taxi.util.TestModelsBase;
 import org.taxi.util.TestObjectsUtils;
 
-import javax.sql.DataSource;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.taxi.entity.QRide.ride;
-import static org.taxi.entity.QUser.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 @IT
 @RequiredArgsConstructor
 class RideRepositoryIT {
 
     private final RideRepository rideRepository;
-    private final DataSource dataSource;
+    private final EntityManager entityManager;
 
     @Test
-    void insert() {
-        Ride ride = TestObjectsUtils.getRide("Hotel", "Airport");
+    void saveRide() {
+        Ride ride = getRide("Hotel", "Airport");
+        Ride expectedRide = rideRepository.save(ride);
 
-        Ride actualRide = rideRepository.save(ride);
-
-        assertNotNull(actualRide.getId());
+        assertThat(expectedRide.getId()).isNotNull();
     }
 
+    @Test
+    void deleteRide() {
+        Ride ride = getRide("Hotel", "Airport");
+        rideRepository.save(ride);
 
+        rideRepository.delete(ride);
+
+        Optional<Ride> actualResult = rideRepository.findById(ride.getId());
+        assertFalse(actualResult.isPresent());
+    }
 
     @Test
-    @Transactional
-    void findAll() {
-        Ride ride1 = rideRepository.save(TestObjectsUtils.getRide("Mall", "Cinema"));
-        Ride ride2 = rideRepository.save(TestObjectsUtils.getRide("Hotel", "Airport"));
-        Ride ride3 = rideRepository.save(TestObjectsUtils.getRide("Office", "Home"));
+    void findRideById() {
+        Ride ride = getRide("Hotel", "Airport");
+        Ride savedRide = rideRepository.save(ride);
 
-        List<Ride> actualRides = rideRepository.findAll();
+        Ride expectedRide = rideRepository.findById(savedRide.getId()).orElse(null);
 
-        List<Long> rideIds = actualRides.stream()
-                .map(Ride::getId)
-                .toList();
-        assertThat(rideIds).containsExactlyInAnyOrder(ride1.getId(), ride2.getId(), ride3.getId());
+        assertThat(expectedRide).isNotNull();
+        assertThat(expectedRide.getId()).isEqualTo(savedRide.getId());
+    }
+
+    @Test
+    void updateRide() {
+        Ride ride = getRide("Hotel", "Airport");
+        Ride savedRide = rideRepository.save(ride);
+
+        savedRide.setCost(new BigDecimal("20.00"));
+        rideRepository.update(savedRide);
+
+        Ride expectedRide = rideRepository.findById(savedRide.getId()).orElse(null);
+        assertThat(expectedRide).isNotNull();
+        assertThat(expectedRide.getCost()).isEqualTo(new BigDecimal("20.00"));
+    }
+
+    @Test
+    void findAllRidesByFilter() {
+        Ride ride1 = getRide("Mall", "Cinema");
+        Ride ride2 = getRide("Hotel", "Airport");
+        rideRepository.save(ride1);
+        ride2.setStatus(RideStatus.PLANNED);
+        rideRepository.save(ride2);
+
+        RideFilter filter = RideFilter.builder()
+                .startDate(ride1.getStartDate())
+                .cost(ride1.getCost())
+                .status(ride1.getStatus())
+                .build();
+
+        List<Ride> rides = rideRepository.findAllRidesByFilter(filter);
+
+        assertThat(rides).hasSize(1);
+        assertThat(rides.get(0).getId()).isEqualTo(ride1.getId());
     }
 
     @ParameterizedTest
     @MethodSource("getExpectedSize")
     void checkFindAllRidesByFilter(RideFilter filter, Integer expected) {
-        Predicate predicate = QueryDslPredicate.builder()
-                .add(filter.getClientId(), user.id::eq)
-                .add(filter.getDriverId(), user.id::eq)
-                .add(filter.getStartDate(), ride.startDate::eq)
-                .add(filter.getStatus(), ride.status::eq)
-                .add(filter.getCost(), ride.cost::eq)
-                .add(filter.getStartLocation(), ride.startLocation::eq)
-                .add(filter.getEndLocation(), ride.endLocation::eq)
-                .buildAnd();
+        // Создаем и сохраняем поездки для теста
+        Ride ride1 = getRide("Mall", "Cinema");
+        Ride ride2 = getRide("Hotel", "Airport");
+        Ride ride3 = getRide("Office", "Home");
+        Ride ride4 = getRide("Home", "Work");
+        ride1.setCost(new BigDecimal("20.00"));
+        ride4.setStartDate(LocalDateTime.of(2024, 10, 30, 8, 0));
+        ride3.setStatus(RideStatus.PLANNED);
+        rideRepository.save(ride1);
+        rideRepository.save(ride2);
+        rideRepository.save(ride3);
+        rideRepository.save(ride4);
 
-        List<Ride> actualRides = new JPAQuery<Ride>()
-                .select(ride)
-                .from(ride)
-                .where(predicate)
-                .fetch();
+        List<Ride> rides = rideRepository.findAllRidesByFilter(filter);
 
-        assertThat(actualRides).hasSize(expected);
+        assertThat(rides).hasSize(expected);
     }
 
     static Stream<Arguments> getExpectedSize() {
@@ -95,14 +126,14 @@ class RideRepositoryIT {
                 // Фильтр по статусу COMPLETED
                 Arguments.of(
                         RideFilter.builder()
-                                .status(RideStatus.COMPLETED)
+                                .status(RideStatus.PLANNED)
                                 .build(),
-                        2
+                        1
                 ),
-                // Фильтр по стоимости 15.00
+                // Фильтр по стоимости 20.00
                 Arguments.of(
                         RideFilter.builder()
-                                .cost(BigDecimal.valueOf(15.00))
+                                .cost(new BigDecimal("20.00"))
                                 .build(),
                         1
                 ),
@@ -123,11 +154,9 @@ class RideRepositoryIT {
                 // Фильтр по всем полям (нет результатов)
                 Arguments.of(
                         RideFilter.builder()
-                                .clientId(null)
-                                .driverId(null)
                                 .startDate(LocalDateTime.of(2025, 1, 1, 0, 0))
                                 .status(RideStatus.PLANNED)
-                                .cost(BigDecimal.valueOf(100.00))
+                                .cost(new BigDecimal("100.00"))
                                 .startLocation("Nonexistent")
                                 .endLocation("Nonexistent")
                                 .build(),
@@ -140,5 +169,23 @@ class RideRepositoryIT {
                         4
                 )
         );
+    }
+
+    private Ride getRide(String start, String end) {
+        String uniqueEmailClient = "Lev" + UUID.randomUUID() + "@gmail.com";
+        String uniqueEmailDriver = "Max" + UUID.randomUUID() + "@gmail.com";
+
+        User client = TestObjectsUtils.getClient("Lev", uniqueEmailClient);
+        entityManager.persist(client);
+
+        User driver = TestObjectsUtils.getDriver("Max", uniqueEmailDriver);
+        entityManager.persist(driver);
+
+        Ride ride = TestObjectsUtils.getRide(start, end);
+        ride.setClient(client);
+        ride.setDriver(driver);
+        entityManager.persist(ride);
+        entityManager.flush();
+        return ride;
     }
 }
