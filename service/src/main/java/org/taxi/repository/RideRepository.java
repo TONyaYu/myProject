@@ -2,8 +2,7 @@ package org.taxi.repository;
 
 import com.querydsl.core.types.Predicate;
 import com.querydsl.jpa.impl.JPAQuery;
-import jakarta.persistence.EntityManager;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.taxi.entity.Ride;
 import org.taxi.util.QueryDslPredicate;
 import org.taxi.util.RideFilter;
@@ -13,15 +12,9 @@ import java.util.List;
 import static org.taxi.entity.QRide.ride;
 import static org.taxi.entity.QUser.user;
 
-@Repository
-public class RideRepository extends RepositoryBase<Long, Ride> {
+public interface RideRepository extends JpaRepository<Ride, Long> {
 
-    public RideRepository(EntityManager entityManager) {
-
-        super(Ride.class, entityManager);
-    }
-
-    public List<Ride> findAllRidesByFilter(RideFilter filter) {
+    public default List<Ride> findAllRidesByFilter(RideFilter filter) {
         Predicate predicate = QueryDslPredicate.builder()
                 .add(filter.getCost(), ride.cost::eq)
                 .add(filter.getClientId(), user.id::eq)
@@ -32,7 +25,7 @@ public class RideRepository extends RepositoryBase<Long, Ride> {
                 .add(filter.getStatus(), ride.status::eq)
                 .buildAnd();
 
-        return new JPAQuery<Ride>(getEntityManager())
+        return new JPAQuery<Ride>()
                 .select(ride)
                 .from(ride)
                 .where(predicate)

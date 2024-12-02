@@ -6,7 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.taxi.annotation.IT;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.taxi.entity.Payment;
 import org.taxi.entity.Ride;
 import org.taxi.entity.User;
@@ -24,12 +25,15 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
-@IT
+@DataJpaTest
 @RequiredArgsConstructor
 class PaymentRepositoryIT {
 
-    private final PaymentRepository paymentRepository;
-    private final EntityManager entityManager;
+    @Autowired
+    private PaymentRepository paymentRepository;
+
+    @Autowired
+    private EntityManager entityManager;
 
     @Test
     void savePayment() {
@@ -67,9 +71,9 @@ class PaymentRepositoryIT {
         Payment savedPayment = paymentRepository.save(payment);
 
         savedPayment.setAmount(new BigDecimal("20.00"));
-        paymentRepository.update(savedPayment);
+        Payment updatedPayment = paymentRepository.save(savedPayment);
 
-        Payment expectedPayment = paymentRepository.findById(savedPayment.getId()).orElse(null);
+        Payment expectedPayment = paymentRepository.findById(updatedPayment.getId()).orElse(null);
         assertThat(expectedPayment).isNotNull();
         assertThat(expectedPayment.getAmount()).isEqualTo(new BigDecimal("20.00"));
     }

@@ -14,7 +14,7 @@ spring:
         current_session_context_class: thread
     hibernate:
       ddl-auto: update
-      
+
   logging:
     level:
       org.hibernate.SQL: DEBUG

@@ -2,7 +2,6 @@ package org.taxi.util;
 
 import lombok.Builder;
 import lombok.Value;
-import org.taxi.entity.Ride;
 import org.taxi.entity.enums.PayMethod;
 
 import java.math.BigDecimal;
