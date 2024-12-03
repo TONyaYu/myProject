@@ -1,14 +1,13 @@
 package org.taxi;
 
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.taxi.config.AppConfig;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+@SpringBootApplication
 public class TaxiAppRunner {
 
     public static void main(String[] args) {
-        try (AnnotationConfigApplicationContext applicationContext
-                     = new AnnotationConfigApplicationContext(AppConfig.class)) {
-
-        }
+        SpringApplication.run(TaxiAppRunner.class, args);
     }
 }
+

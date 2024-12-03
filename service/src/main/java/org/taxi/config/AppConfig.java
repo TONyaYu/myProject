@@ -13,12 +13,10 @@ import java.lang.reflect.Proxy;
 @ComponentScan("org.taxi")
 public class AppConfig {
 
-    @Bean(destroyMethod = "close")
     public SessionFactory sessionFactory() {
         return HibernateUtil.buildSessionFactory();
     }
 
-    @Bean
     public Session session(SessionFactory sessionFactory) {
         return (Session) Proxy.newProxyInstance(SessionFactory.class.getClassLoader(), new Class[]{Session.class},
                 (proxy, method, args) -> method.invoke(sessionFactory.getCurrentSession(), args));

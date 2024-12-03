@@ -1,6 +1,14 @@
 package org.taxi.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,16 +32,9 @@ public class Payment implements BaseEntity<Long> {
     private BigDecimal amount;
     private LocalDateTime date;
     @Enumerated(EnumType.STRING)
-    @Column(name = "payment_method")
     private PayMethod paymentMethod;
     @OneToOne
     @JoinColumn(name = "ride_id")
     private Ride ride;
-
-    @Override
-    public Long getId() {
-        return this.id;
-    }
-
 }
 

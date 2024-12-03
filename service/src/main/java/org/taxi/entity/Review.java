@@ -27,15 +27,9 @@ public class Review implements BaseEntity<Long> {
     private Long id;
     private int rating; // 1-5
     private String comment;
-    @Column(name = "review_date")
     private LocalDateTime reviewDate;
     @ManyToOne(fetch = FetchType.LAZY)
     private Ride ride;
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
-
-    @Override
-    public Long getId() {
-        return this.id;
-    }
 }

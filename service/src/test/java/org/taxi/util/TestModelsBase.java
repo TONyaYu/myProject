@@ -16,7 +16,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @UtilityClass
-public class TestModelsBase extends AbstractTestBase {
+public class TestModelsBase {
 
     public void importData(Session session) {
 
