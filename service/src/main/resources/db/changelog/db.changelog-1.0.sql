@@ -1,5 +1,7 @@
--- Создание таблицы пользователей
-CREATE TABLE users
+--liquibase formatted sql
+
+--changeset tonyayurina:1
+CREATE TABLE IF NOT EXISTS users
 (
     id         SERIAL PRIMARY KEY,
     first_name VARCHAR(128)        NOT NULL,
@@ -7,11 +9,11 @@ CREATE TABLE users
     email      VARCHAR(128) UNIQUE NOT NULL,
     password   VARCHAR(255)        NOT NULL,
     phone      VARCHAR(20),
-    role       VARCHAR(32)
+    user_role  VARCHAR(32)
 );
 
--- Создание таблицы автомобилей
-CREATE TABLE car
+--changeset tonyayurina:2
+CREATE TABLE IF NOT EXISTS car
 (
     id            SERIAL PRIMARY KEY,
     make          VARCHAR(128)       NOT NULL,
@@ -20,15 +22,17 @@ CREATE TABLE car
     is_available  BOOLEAN
 );
 
-CREATE TABLE user_car
+--changeset tonyayurina:3
+CREATE TABLE IF NOT EXISTS user_car
 (
     id      BIGSERIAL PRIMARY KEY,
     user_id BIGINT REFERENCES users (id),
     car_id  BIGINT REFERENCES car (id)
 );
 
--- Создание таблицы поездок
-CREATE TABLE ride
+
+--changeset tonyayurina:4
+CREATE TABLE IF NOT EXISTS ride
 (
     id             SERIAL PRIMARY KEY,
     client_id      INT          NOT NULL,
@@ -43,8 +47,8 @@ CREATE TABLE ride
     FOREIGN KEY (driver_id) REFERENCES users (id)
 );
 
--- Создание таблицы платежей
-CREATE TABLE payment
+--changeset tonyayurina:5
+CREATE TABLE IF NOT EXISTS payment
 (
     id             SERIAL PRIMARY KEY,
     ride_id        INT            NOT NULL,
@@ -54,8 +58,8 @@ CREATE TABLE payment
     FOREIGN KEY (ride_id) REFERENCES ride (id)
 );
 
--- Создание таблицы отзывов
-CREATE TABLE review
+--changeset tonyayurina:6
+CREATE TABLE IF NOT EXISTS review
 (
     id          SERIAL PRIMARY KEY,
     ride_id     INT NOT NULL,
@@ -66,13 +70,3 @@ CREATE TABLE review
     FOREIGN KEY (ride_id) REFERENCES ride (id),
     FOREIGN KEY (client_id) REFERENCES users (id)
 );
-
-
--- Удаление таблицы users со всеми связанными объектами
-DROP TABLE users CASCADE;
-
-DROP TABLE user_car;
-DROP TABLE car;
-DROP TABLE payment;
-DROP TABLE review;
-DROP TABLE ride;

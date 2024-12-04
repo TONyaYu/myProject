@@ -21,7 +21,7 @@ import java.util.UUID;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @IT
 @RequiredArgsConstructor
@@ -40,13 +40,14 @@ class RideRepositoryIT {
 
     @Test
     void deleteRide() {
-        Ride ride = getRide("Hotel", "Airport");
+        var ride = getRide("Hotel", "Airport");
         rideRepository.save(ride);
-
-        rideRepository.delete(ride);
-
         Optional<Ride> actualResult = rideRepository.findById(ride.getId());
-        assertFalse(actualResult.isPresent());
+        assertTrue(actualResult.isPresent());
+        actualResult.ifPresent(rideRepository::delete);
+        entityManager.flush();
+
+        assertTrue(rideRepository.findById(ride.getId()).isEmpty());
     }
 
     @Test
@@ -66,7 +67,7 @@ class RideRepositoryIT {
         Ride savedRide = rideRepository.save(ride);
 
         savedRide.setCost(new BigDecimal("20.00"));
-        rideRepository.update(savedRide);
+        rideRepository.save(savedRide);
 
         Ride expectedRide = rideRepository.findById(savedRide.getId()).orElse(null);
         assertThat(expectedRide).isNotNull();
