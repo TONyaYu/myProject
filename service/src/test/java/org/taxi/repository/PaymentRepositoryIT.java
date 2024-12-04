@@ -8,6 +8,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.taxi.annotation.IT;
 import org.taxi.entity.Payment;
 import org.taxi.entity.Ride;
 import org.taxi.entity.User;
@@ -25,7 +26,7 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
-@DataJpaTest
+@IT
 @RequiredArgsConstructor
 class PaymentRepositoryIT {
 

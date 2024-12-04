@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS users
     email      VARCHAR(128) UNIQUE NOT NULL,
     password   VARCHAR(255)        NOT NULL,
     phone      VARCHAR(20),
-    role       VARCHAR(32)
+    user_role  VARCHAR(32)
 );
 
 --changeset tonyayurina:2
