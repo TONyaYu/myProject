@@ -70,13 +70,3 @@ CREATE TABLE IF NOT EXISTS review
     FOREIGN KEY (ride_id) REFERENCES ride (id),
     FOREIGN KEY (client_id) REFERENCES users (id)
 );
-
-
--- Удаление таблицы users со всеми связанными объектами
-DROP TABLE users CASCADE;
-
-DROP TABLE user_car;
-DROP TABLE car;
-DROP TABLE payment;
-DROP TABLE review;
-DROP TABLE ride;
