@@ -1,4 +1,4 @@
-package org.taxi.util;
+package org.taxi.filters;
 
 import lombok.Builder;
 import lombok.Value;

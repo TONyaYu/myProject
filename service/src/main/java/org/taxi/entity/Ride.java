@@ -28,7 +28,7 @@ import java.util.List;
 @Builder
 @Entity
 @Table(name = "ride")
-public class Ride implements BaseEntity<Long> {
+public class Ride extends AuditingEntity<Long> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

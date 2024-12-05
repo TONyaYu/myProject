@@ -6,7 +6,6 @@ spring:
     driver-class-name: org.postgresql.Driver
 
   liquibase:
-    change-log: classpath:db/changelog/db.changelog-master.yaml
     default-schema: taxi_schema
 
 
@@ -15,9 +14,9 @@ spring:
     properties:
       hibernate.format_sql: true
 
-  logging:
-    level:
-      root: DEBUG
-    file:
-      name: taxi.log
-      path: /
+#  logging:
+#    level:
+#      root: DEBUG
+#    file:
+#      name: taxi.log
+#      path: /
