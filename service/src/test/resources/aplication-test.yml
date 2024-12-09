@@ -1,9 +1,10 @@
 spring:
   datasource:
-    url: jdbc:tc:postgresql:13:///testdatabase
+    url: jdbc:tc:postgresql:17:///testdatabase
     driver-class-name: org.testconteiners.jdbc.ContainerDatabaseDriver
     username: test
     password: test
+
   jpa:
     properties.hibernate:
       ddl-auto: update

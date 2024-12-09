@@ -6,11 +6,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.taxi.annotation.IT;
 import org.taxi.entity.Ride;
 import org.taxi.entity.User;
 import org.taxi.entity.enums.RideStatus;
-import org.taxi.util.RideFilter;
+import org.taxi.filters.RideFilter;
 import org.taxi.util.TestObjectsUtils;
 
 import java.math.BigDecimal;
@@ -21,13 +22,15 @@ import java.util.UUID;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @IT
 @RequiredArgsConstructor
 class RideRepositoryIT {
 
+    @Autowired
     private final RideRepository rideRepository;
+    @Autowired
     private final EntityManager entityManager;
 
     @Test
@@ -40,13 +43,14 @@ class RideRepositoryIT {
 
     @Test
     void deleteRide() {
-        Ride ride = getRide("Hotel", "Airport");
+        var ride = getRide("Hotel", "Airport");
         rideRepository.save(ride);
-
-        rideRepository.delete(ride);
-
         Optional<Ride> actualResult = rideRepository.findById(ride.getId());
-        assertFalse(actualResult.isPresent());
+        assertTrue(actualResult.isPresent());
+        actualResult.ifPresent(rideRepository::delete);
+        entityManager.flush();
+
+        assertTrue(rideRepository.findById(ride.getId()).isEmpty());
     }
 
     @Test
@@ -66,7 +70,7 @@ class RideRepositoryIT {
         Ride savedRide = rideRepository.save(ride);
 
         savedRide.setCost(new BigDecimal("20.00"));
-        rideRepository.update(savedRide);
+        rideRepository.save(savedRide);
 
         Ride expectedRide = rideRepository.findById(savedRide.getId()).orElse(null);
         assertThat(expectedRide).isNotNull();
@@ -74,20 +78,19 @@ class RideRepositoryIT {
     }
 
     @Test
-    void findAllRidesByFilter() {
+    void findAllRideByFilter() {
         Ride ride1 = getRide("Mall", "Cinema");
         Ride ride2 = getRide("Hotel", "Airport");
         rideRepository.save(ride1);
         ride2.setStatus(RideStatus.PLANNED);
         rideRepository.save(ride2);
 
-        RideFilter filter = RideFilter.builder()
+
+        List<Ride> rides = rideRepository.findAllRideByFilter(RideFilter.builder()
                 .startDate(ride1.getStartDate())
                 .cost(ride1.getCost())
                 .status(ride1.getStatus())
-                .build();
-
-        List<Ride> rides = rideRepository.findAllRidesByFilter(filter);
+                .build());
 
         assertThat(rides).hasSize(1);
         assertThat(rides.get(0).getId()).isEqualTo(ride1.getId());
@@ -109,7 +112,7 @@ class RideRepositoryIT {
         rideRepository.save(ride3);
         rideRepository.save(ride4);
 
-        List<Ride> rides = rideRepository.findAllRidesByFilter(filter);
+        List<Ride> rides = rideRepository.findAllRideByFilter(filter);
 
         assertThat(rides).hasSize(expected);
     }

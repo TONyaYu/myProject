@@ -1,12 +1,7 @@
 package org.taxi.repository;
 
-import jakarta.persistence.EntityManager;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.taxi.entity.User;
 
-@Repository
-public class UserRepository extends RepositoryBase<Long, User> {
-    public UserRepository(EntityManager entityManager) {
-        super(User.class, entityManager);
-    }
+public interface UserRepository extends JpaRepository<User, Long> {
 }

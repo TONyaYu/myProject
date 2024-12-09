@@ -1,13 +1,8 @@
 package org.taxi.repository;
 
-import jakarta.persistence.EntityManager;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.repository.Repository;
 import org.taxi.entity.Car;
 
-@Repository
-public class CarRepository extends RepositoryBase<Long, Car> {
+public interface CarRepository extends Repository<Car, Long> {
 
-    public CarRepository(EntityManager entityManager) {
-        super(Car.class, entityManager);
-    }
 }
