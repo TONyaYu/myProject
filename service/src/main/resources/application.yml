@@ -1,4 +1,7 @@
 spring:
+  mvc:
+    format:
+      date: iso
   datasource:
     url: jdbc:postgresql://localhost:5432/postgres
     username: postgres
@@ -13,10 +16,13 @@ spring:
     show-sql: true
     properties:
       hibernate.format_sql: true
+      hibernate.show_sql: true
+    open-in-view: false
 
-#  logging:
-#    level:
-#      root: DEBUG
-#    file:
-#      name: taxi.log
-#      path: /
+  logging:
+    level:
+      root: INFO
+      org.springframework.jdbc.core: TRACE
+    file:
+      name: taxi.log
+      path: /
