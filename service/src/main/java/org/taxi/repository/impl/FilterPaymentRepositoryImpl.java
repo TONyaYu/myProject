@@ -22,7 +22,6 @@ public class FilterPaymentRepositoryImpl implements FilterPaymentRepository {
 
     @Override
     public List<Payment> findAllPaymentByFilter(PaymentFilter filter) {
-        List<Predicate> predicates = new ArrayList<>();
         Predicate predicate = QueryDslPredicate.builder()
                 .add(filter.getDate(), payment.date::eq)
                 .add(filter.getAmount(), payment.amount::eq)

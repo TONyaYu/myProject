@@ -11,6 +11,7 @@ CREATE TABLE IF NOT EXISTS users
     phone      VARCHAR(20),
     user_role  VARCHAR(32)
 );
+--rollback DROP TABLE users;
 
 --changeset tonyayurina:2
 CREATE TABLE IF NOT EXISTS car
@@ -19,8 +20,9 @@ CREATE TABLE IF NOT EXISTS car
     make          VARCHAR(128)       NOT NULL,
     model         VARCHAR(128)       NOT NULL,
     license_plate VARCHAR(20) UNIQUE NOT NULL,
-    is_available  BOOLEAN
+    available  BOOLEAN
 );
+--rollback DROP TABLE car;
 
 --changeset tonyayurina:3
 CREATE TABLE IF NOT EXISTS user_car
@@ -29,7 +31,7 @@ CREATE TABLE IF NOT EXISTS user_car
     user_id BIGINT REFERENCES users (id),
     car_id  BIGINT REFERENCES car (id)
 );
-
+--rollback DROP TABLE user_car;
 
 --changeset tonyayurina:4
 CREATE TABLE IF NOT EXISTS ride
@@ -46,6 +48,7 @@ CREATE TABLE IF NOT EXISTS ride
     FOREIGN KEY (client_id) REFERENCES users (id),
     FOREIGN KEY (driver_id) REFERENCES users (id)
 );
+--rollback DROP TABLE ride;
 
 --changeset tonyayurina:5
 CREATE TABLE IF NOT EXISTS payment
@@ -57,6 +60,7 @@ CREATE TABLE IF NOT EXISTS payment
     payment_method VARCHAR(50)    NOT NULL,
     FOREIGN KEY (ride_id) REFERENCES ride (id)
 );
+--rollback DROP TABLE payment;
 
 --changeset tonyayurina:6
 CREATE TABLE IF NOT EXISTS review
@@ -70,3 +74,4 @@ CREATE TABLE IF NOT EXISTS review
     FOREIGN KEY (ride_id) REFERENCES ride (id),
     FOREIGN KEY (client_id) REFERENCES users (id)
 );
+--rollback DROP TABLE review;

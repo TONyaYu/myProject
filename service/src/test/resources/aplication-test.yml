@@ -4,8 +4,3 @@ spring:
     driver-class-name: org.testconteiners.jdbc.ContainerDatabaseDriver
     username: test
     password: test
-
-  jpa:
-    properties.hibernate:
-      ddl-auto: update
-    show-sql: true

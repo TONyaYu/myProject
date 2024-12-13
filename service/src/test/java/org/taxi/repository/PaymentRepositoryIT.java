@@ -61,6 +61,7 @@ class PaymentRepositoryIT {
         Payment savedPayment = paymentRepository.save(payment);
 
         Payment expectedPayment = paymentRepository.findById(savedPayment.getId()).orElse(null);
+        entityManager.flush();
 
         assertThat(expectedPayment).isNotNull();
         assertThat(expectedPayment.getId()).isEqualTo(savedPayment.getId());
