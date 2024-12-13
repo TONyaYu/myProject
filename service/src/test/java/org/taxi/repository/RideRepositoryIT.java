@@ -36,6 +36,7 @@ class RideRepositoryIT {
     @Test
     void saveRide() {
         Ride ride = getRide("Hotel", "Airport");
+
         Ride expectedRide = rideRepository.save(ride);
 
         assertThat(expectedRide.getId()).isNotNull();
@@ -47,6 +48,7 @@ class RideRepositoryIT {
         rideRepository.save(ride);
         Optional<Ride> actualResult = rideRepository.findById(ride.getId());
         assertTrue(actualResult.isPresent());
+
         actualResult.ifPresent(rideRepository::delete);
         entityManager.flush();
 
@@ -59,6 +61,7 @@ class RideRepositoryIT {
         Ride savedRide = rideRepository.save(ride);
 
         Ride expectedRide = rideRepository.findById(savedRide.getId()).orElse(null);
+        entityManager.flush();
 
         assertThat(expectedRide).isNotNull();
         assertThat(expectedRide.getId()).isEqualTo(savedRide.getId());
