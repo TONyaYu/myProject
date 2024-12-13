@@ -33,9 +33,10 @@ public class UserService {
     @GetMapping
     public Page<UserReadDto> findAll(UserFilter filter, Pageable pageable) {
         var predicate = QueryDslPredicate.builder()
-                .add(filter.firstname(), user.firstName::containsIgnoreCase)
-                .add(filter.lastname(), user.lastName::containsIgnoreCase)
-                .add(filter.email(), user.email::containsIgnoreCase)
+                .add(filter.getFirstname(), user.firstName::containsIgnoreCase)
+                .add(filter.getLastname(), user.lastName::containsIgnoreCase)
+                .add(filter.getEmail(), user.email::containsIgnoreCase)
+                .add(filter.getPhone(), user.phone::contains)
                 .buildAnd();
 
         return userRepository.findAll(predicate, pageable)

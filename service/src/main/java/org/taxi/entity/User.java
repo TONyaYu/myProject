@@ -15,7 +15,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.taxi.entity.enums.UserRole;
+import org.taxi.entity.enums.Role;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +40,7 @@ public class User implements BaseEntity<Long> {
     private String password;
     private String phone;
     @Enumerated(EnumType.STRING)
-    private UserRole userRole;
+    private Role role;
     @Builder.Default
     @OneToMany(mappedBy = "client")
     private List<Ride> rides = new ArrayList<>();

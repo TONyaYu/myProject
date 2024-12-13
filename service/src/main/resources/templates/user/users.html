@@ -5,15 +5,12 @@
     <title>Users</title>
 </head>
 <body>
-<form action="/users">
+<form action="/user/users">
     <label for="firstname">Firstname:
         <input id="firstname" type="text" name="firstname" th:value="${filter.firstname()}">
     </label>
     <label for="lastname">Lastname:
         <input id="lastname" type="text" name="lastname" th:value="${filter.lastname()}">
-    </label>
-    <label for="birthDate">Birthdate:
-        <input id="birthDate" type="date" name="email" th:value="${filter.email()}">
     </label>
     <div>
         <label for="page">Page:
@@ -26,7 +23,7 @@
     <button type="submit">Filter</button>
 </form>
 <div th:each="user : ${users.content}">
-    <a th:href="@{'/users/' + ${user.id}}" th:text="|${user.id}. ${user.username}|">User</a>
+    <a th:href="@{'user/users/' + ${user.id}}" th:text="|${user.id}. ${user.firstName}|">User</a>
 </div>
 </body>
 </html>

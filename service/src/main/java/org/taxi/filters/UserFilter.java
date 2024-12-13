@@ -1,8 +1,11 @@
 package org.taxi.filters;
 
-public record UserFilter(
-        String firstname,
-        String lastname,
-        String email) {
+import lombok.Value;
 
+@Value
+public class UserFilter{
+    String firstname;
+    String lastname;
+    String email;
+    String phone;
 }

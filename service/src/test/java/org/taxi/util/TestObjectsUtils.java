@@ -7,7 +7,7 @@ import org.taxi.entity.Review;
 import org.taxi.entity.Ride;
 import org.taxi.entity.enums.RideStatus;
 import org.taxi.entity.User;
-import org.taxi.entity.enums.UserRole;
+import org.taxi.entity.enums.Role;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -21,7 +21,7 @@ public class TestObjectsUtils {
                 .email(email)
                 .password("client1")
                 .phone("16379872")
-                .userRole(UserRole.CLIENT)
+                .role(Role.CLIENT)
                 .build();
     }
 
@@ -32,7 +32,7 @@ public class TestObjectsUtils {
                 .email(email)
                 .password("client1")
                 .phone("16379872")
-                .userRole(UserRole.DRIVER)
+                .role(Role.DRIVER)
                 .build();
     }
 

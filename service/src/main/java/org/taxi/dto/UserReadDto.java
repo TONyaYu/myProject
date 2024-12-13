@@ -1,12 +1,14 @@
 package org.taxi.dto;
 
-import org.taxi.entity.enums.UserRole;
+import lombok.Value;
+import org.taxi.entity.enums.Role;
 
-public record UserReadDto(Long id,
-                          String firstName,
-                          String lastName,
-                          UserRole userRole,
-                          String email,
-                          String phone) {
-
+@Value
+public class UserReadDto {
+    Long id;
+    String firstName;
+    String lastName;
+    Role role;
+    String emai;
+    String phone;
 }
