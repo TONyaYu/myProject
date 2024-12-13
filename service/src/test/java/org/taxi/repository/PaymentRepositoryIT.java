@@ -6,12 +6,14 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.taxi.annotation.IT;
 import org.taxi.entity.Payment;
 import org.taxi.entity.Ride;
 import org.taxi.entity.User;
 import org.taxi.entity.enums.PayMethod;
-import org.taxi.util.PaymentFilter;
+import org.taxi.filters.PaymentFilter;
+import org.taxi.repository.impl.FilterPaymentRepositoryImpl;
 import org.taxi.util.TestObjectsUtils;
 
 import java.math.BigDecimal;
@@ -28,8 +30,11 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 @RequiredArgsConstructor
 class PaymentRepositoryIT {
 
-    private final PaymentRepository paymentRepository;
-    private final EntityManager entityManager;
+    @Autowired
+    private PaymentRepository paymentRepository;
+
+    @Autowired
+    private EntityManager entityManager;
 
     @Test
     void savePayment() {
@@ -56,6 +61,7 @@ class PaymentRepositoryIT {
         Payment savedPayment = paymentRepository.save(payment);
 
         Payment expectedPayment = paymentRepository.findById(savedPayment.getId()).orElse(null);
+        entityManager.flush();
 
         assertThat(expectedPayment).isNotNull();
         assertThat(expectedPayment.getId()).isEqualTo(savedPayment.getId());
@@ -67,9 +73,9 @@ class PaymentRepositoryIT {
         Payment savedPayment = paymentRepository.save(payment);
 
         savedPayment.setAmount(new BigDecimal("20.00"));
-        paymentRepository.update(savedPayment);
+        Payment updatedPayment = paymentRepository.save(savedPayment);
 
-        Payment expectedPayment = paymentRepository.findById(savedPayment.getId()).orElse(null);
+        Payment expectedPayment = paymentRepository.findById(updatedPayment.getId()).orElse(null);
         assertThat(expectedPayment).isNotNull();
         assertThat(expectedPayment.getAmount()).isEqualTo(new BigDecimal("20.00"));
     }

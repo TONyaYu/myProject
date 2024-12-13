@@ -5,20 +5,11 @@ spring:
     password: pass
     driver-class-name: org.postgresql.Driver
 
+  liquibase:
+    default-schema: taxi_schema
+
+
   jpa:
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
     show-sql: true
     properties:
-      hibernate:
-        format_sql: true
-        current_session_context_class: thread
-    hibernate:
-      ddl-auto: update
-      
-  logging:
-    level:
-      org.hibernate.SQL: DEBUG
-      org.hibernate.type.descriptor.sql.BasicBinder: TRACE
-    file:
-      name: taxi.log
-      path: /
+      hibernate.format_sql: true
