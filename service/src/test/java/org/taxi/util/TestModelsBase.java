@@ -10,7 +10,7 @@ import org.taxi.entity.Ride;
 import org.taxi.entity.enums.RideStatus;
 import org.taxi.entity.User;
 import org.taxi.entity.UserCar;
-import org.taxi.entity.enums.UserRole;
+import org.taxi.entity.enums.Role;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -20,15 +20,15 @@ public class TestModelsBase {
 
     public void importData(Session session) {
 
-        User tomSoyer = saveUser(session, "Tom", "Soyer", "895454121", "toms@gmail.com", UserRole.DRIVER, "Qeexf12lk");
-        User aliceJohnson = saveUser(session, "Alice", "Johnson", "895454122", "alice@gmail.com", UserRole.CLIENT, "Passw0rd1");
-        User bobSmith = saveUser(session, "Bob", "Smith", "895454123", "bob@gmail.com", UserRole.DRIVER, "SecurePwd2");
-        User charlieBrown = saveUser(session, "Charlie", "Brown", "895454124", "charlie@gmail.com", UserRole.CLIENT, "P@ssw0rd3");
-        User dianaRoss = saveUser(session, "Diana", "Ross", "895454125", "diana@gmail.com", UserRole.DRIVER, "Secret4");
-        User edwardNorton = saveUser(session, "Edward", "Norton", "895454126", "edward@gmail.com", UserRole.CLIENT, "Passw0rd5");
-        User fionaApple = saveUser(session, "Fiona", "Apple", "895454127", "fiona@gmail.com", UserRole.DRIVER, "P@ssw0rd6");
-        User georgeClooney = saveUser(session, "George", "Clooney", "895454128", "george@gmail.com", UserRole.CLIENT, "SecurePwd7");
-        User hannahMontana = saveUser(session, "Hannah", "Montana", "895454129", "hannah@gmail.com", UserRole.ADMIN, "Qeexf12lk8");
+        User tomSoyer = saveUser(session, "Tom", "Soyer", "895454121", "toms@gmail.com", Role.DRIVER, "Qeexf12lk");
+        User aliceJohnson = saveUser(session, "Alice", "Johnson", "895454122", "alice@gmail.com", Role.CLIENT, "Passw0rd1");
+        User bobSmith = saveUser(session, "Bob", "Smith", "895454123", "bob@gmail.com", Role.DRIVER, "SecurePwd2");
+        User charlieBrown = saveUser(session, "Charlie", "Brown", "895454124", "charlie@gmail.com", Role.CLIENT, "P@ssw0rd3");
+        User dianaRoss = saveUser(session, "Diana", "Ross", "895454125", "diana@gmail.com", Role.DRIVER, "Secret4");
+        User edwardNorton = saveUser(session, "Edward", "Norton", "895454126", "edward@gmail.com", Role.CLIENT, "Passw0rd5");
+        User fionaApple = saveUser(session, "Fiona", "Apple", "895454127", "fiona@gmail.com", Role.DRIVER, "P@ssw0rd6");
+        User georgeClooney = saveUser(session, "George", "Clooney", "895454128", "george@gmail.com", Role.CLIENT, "SecurePwd7");
+        User hannahMontana = saveUser(session, "Hannah", "Montana", "895454129", "hannah@gmail.com", Role.ADMIN, "Qeexf12lk8");
 
         Ride ride1 = saveRide(session, aliceJohnson, tomSoyer, new BigDecimal("15.00"), "Home", "Work",
                 LocalDateTime.of(2024, 10, 30, 8, 0), LocalDateTime.of(2024, 10, 30, 8, 30), RideStatus.COMPLETED);
@@ -74,13 +74,13 @@ public class TestModelsBase {
         return car;
     }
 
-    private User saveUser(Session session, String name, String lastName, String phone, String email, UserRole role, String pswrd) {
+    private User saveUser(Session session, String name, String lastName, String phone, String email, Role role, String pswrd) {
         User user = User.builder()
                 .firstName(name)
                 .lastName(lastName)
                 .phone(phone)
                 .email(email)
-                .userRole(role)
+                .role(role)
                 .password(pswrd)
                 .build();
         session.persist(user);

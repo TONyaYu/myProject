@@ -1,6 +1,6 @@
 package org.taxi.entity.enums;
 
-public enum UserRole {
+public enum Role {
     CLIENT,
     DRIVER,
     ADMIN
