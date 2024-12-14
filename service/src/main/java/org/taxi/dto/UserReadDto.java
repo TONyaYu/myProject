@@ -6,9 +6,9 @@ import org.taxi.entity.enums.Role;
 @Value
 public class UserReadDto {
     Long id;
-    String firstName;
-    String lastName;
+    String firstname;
+    String lastname;
     Role role;
-    String emai;
+    String email;
     String phone;
 }

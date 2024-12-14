@@ -21,7 +21,6 @@ spring:
 
   logging:
     level:
-      root: INFO
       org.springframework.jdbc.core: TRACE
     file:
       name: taxi.log

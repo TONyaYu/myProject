@@ -7,10 +7,10 @@
 <body>
 <form th:action="@{/users}" method="post" th:object="${user}">
     <label for="firstname">Firstname:
-        <input id="firstname" type="text" name="firstname" th:value="*{firstName}">
+        <input id="firstname" type="text" name="firstname" th:value="*{firstname}">
     </label><br>
     <label for="lastname">Lastname:
-        <input id="lastname" type="text" name="lastname" th:value="*{lastName}">
+        <input id="lastname" type="text" name="lastname" th:value="*{lastname}">
     </label><br>
     <label for="phone">Phone:
         <input id="phone" type="text" name="phone" th:value="*{phone}">

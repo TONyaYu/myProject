@@ -34,8 +34,8 @@ public class UserController {
     @GetMapping("/{id}")
     public String findById(@PathVariable("id") Long id, Model model) {
         return userService.findById(id)
-                .map(users -> {
-                    model.addAttribute("users", users);
+                .map(user -> {
+                    model.addAttribute("user", user);
                     model.addAttribute("roles", Role.values());
                     return "user/users";
                 })
@@ -51,18 +51,18 @@ public class UserController {
 
     @PostMapping
     public String create(@ModelAttribute UserCreateEditDto user, RedirectAttributes redirectAttributes) {
-//        if (true) {
-//            redirectAttributes.addAttribute("username", user.getUsername());
+        if (true) {
+//            redirectAttributes.addAttribute("username", user.getLastname());
 //            redirectAttributes.addAttribute("firstname", user.getFirstname());
-//            redirectAttributes.addFlashAttribute("user", user);
-//            return "redirect:/users/registration";
-//        }
+            redirectAttributes.addFlashAttribute("user", user);
+            return "redirect:/users/registration";
+        }
         return "redirect:/users/" + userService.create(user).getId();
     }
 
     @PostMapping("/{id}/update")
-    public String update(@PathVariable("id") Long id, @ModelAttribute UserCreateEditDto user) {
-        return userService.update(id, user)
+    public String update(@PathVariable("id") Long id, @ModelAttribute UserCreateEditDto users) {
+        return userService.update(id, users)
                 .map(it -> "redirect:/users/{id}")
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }

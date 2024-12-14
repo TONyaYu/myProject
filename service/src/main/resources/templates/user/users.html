@@ -5,7 +5,7 @@
     <title>Users</title>
 </head>
 <body>
-<form action="/user/users">
+<form action="/users">
     <label for="firstname">Firstname:
         <input id="firstname" type="text" name="firstname" th:value="${filter.firstname()}">
     </label>
@@ -14,16 +14,16 @@
     </label>
     <div>
         <label for="page">Page:
-            <input id="page" type="number" name="page" th:value="${users.metadata.page}">
+            <input id="page" type="number" name="page" th:value="${user.metadata.page}">
         </label>
         <label for="size">Size:
-            <input id="size" type="number" name="size" th:value="${users.metadata.size}">
+            <input id="size" type="number" name="size" th:value="${user.metadata.size}">
         </label>
     </div>
     <button type="submit">Filter</button>
 </form>
-<div th:each="user : ${users.content}">
-    <a th:href="@{'user/users/' + ${user.id}}" th:text="|${user.id}. ${user.firstName}|">User</a>
+<div th:each="user : ${user.content}">
+    <a th:href="@{'/users/' + ${user.id}}" th:text="|${user.id}. ${user.firstName}|">User</a>
 </div>
 </body>
 </html>

@@ -30,7 +30,6 @@ public class UserService {
     private final UserReadMapper userReadMapper;
     private final UserCreateEditMapper userCreateEditMapper;
 
-    @GetMapping
     public Page<UserReadDto> findAll(UserFilter filter, Pageable pageable) {
         var predicate = QueryDslPredicate.builder()
                 .add(filter.getFirstname(), user.firstName::containsIgnoreCase)
@@ -43,20 +42,17 @@ public class UserService {
                 .map(userReadMapper::map);
     }
 
-    @GetMapping
     public List<UserReadDto> findAll() {
         return userRepository.findAll().stream()
                 .map(userReadMapper::map)
                 .toList();
     }
 
-    @GetMapping
     public Optional<UserReadDto> findById(Long id) {
         return userRepository.findById(id)
                 .map(userReadMapper::map);
     }
 
-    @PostMapping
     @Transactional
     public UserReadDto create(UserCreateEditDto userDto) {
         return Optional.of(userDto)
@@ -66,7 +62,6 @@ public class UserService {
                 .orElseThrow();
     }
 
-    @PostMapping("/{id}/update")
     @Transactional
     public Optional<UserReadDto> update(Long id, UserCreateEditDto userDto) {
         return userRepository.findById(id)
@@ -76,7 +71,6 @@ public class UserService {
     }
 
     @Transactional
-    @DeleteMapping("/{id}")
     public boolean delete(Long id) {
         return userRepository.findById(id)
                 .map(entity -> {
