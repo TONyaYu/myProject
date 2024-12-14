@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Value;
 import lombok.experimental.FieldNameConstants;
+import org.springframework.web.multipart.MultipartFile;
 import org.taxi.entity.enums.Role;
 
 @Value
@@ -21,4 +22,5 @@ public class UserCreateEditDto {
     Role role;
     @NotBlank
     String password;
+    MultipartFile image;
 }
