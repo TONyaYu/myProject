@@ -27,6 +27,7 @@
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <springdoc-openapi-starter-webmvc-ui.version>2.7.0</springdoc-openapi-starter-webmvc-ui.version>
    </properties>
 
     <dependencyManagement>
@@ -44,6 +45,11 @@
                 <artifactId>querydsl-jpa</artifactId>
                 <version>${querydsl.version}</version>
                 <classifier>jakarta</classifier>
+            </dependency>
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+                <version>${springdoc-openapi-starter-webmvc-ui.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

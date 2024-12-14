@@ -11,7 +11,7 @@ import org.taxi.annotation.IT;
 import org.taxi.entity.Ride;
 import org.taxi.entity.User;
 import org.taxi.entity.enums.RideStatus;
-import org.taxi.filters.RideFilter;
+import org.taxi.dto.filters.RideFilter;
 import org.taxi.util.TestObjectsUtils;
 
 import java.math.BigDecimal;

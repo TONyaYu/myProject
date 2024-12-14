@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.taxi.dto.UserCreateEditDto;
 import org.taxi.dto.UserReadDto;
-import org.taxi.filters.UserFilter;
+import org.taxi.dto.filters.UserFilter;
 import org.taxi.mapper.UserCreateEditMapper;
 import org.taxi.mapper.UserReadMapper;
 import org.taxi.repository.UserRepository;
@@ -34,6 +34,7 @@ public class UserService {
                 .add(filter.getLastname(), user.lastName::containsIgnoreCase)
                 .add(filter.getEmail(), user.email::containsIgnoreCase)
                 .add(filter.getPhone(), user.phone::contains)
+                .add(filter.getRole(), user.role::eq)
                 .buildOr();
 
         return userRepository.findAll(predicate, pageable)

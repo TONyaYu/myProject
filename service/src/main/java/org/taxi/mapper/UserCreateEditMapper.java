@@ -29,5 +29,6 @@ public class UserCreateEditMapper implements Mapper<UserCreateEditDto, User> {
         user.setEmail(object.getEmail());
         user.setRole(object.getRole());
         user.setPhone(object.getPhone());
+        user.setPassword(object.getPassword());
     }
 }

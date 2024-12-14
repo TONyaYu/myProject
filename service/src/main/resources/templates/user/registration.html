@@ -18,11 +18,17 @@
     <label for="email">Email:
         <input id="email" type="text" name="email" th:value="*{email}">
     </label><br>
+    <label for="password">Password:
+        <input id="password" type="text" name="password" th:value="*{password}">
+    </label><br>
     <div th:each="role : ${roles}">
         <input th:id="${role}" type="radio" name="role" th:value="${role}" th:checked="${role == user.role}">
         <label th:for="${role}" th:text="${role}">Role name</label>
     </div>
     <button type="submit">Register</button>
 </form>
+<div th:if="${errors}">
+    <p style="color: red" th:each="error : ${errors}" th:text="${error.defaultMessage}">Error message</p>
+</div>
 </body>
 </html>

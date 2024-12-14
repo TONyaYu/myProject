@@ -12,8 +12,7 @@ import org.taxi.entity.Payment;
 import org.taxi.entity.Ride;
 import org.taxi.entity.User;
 import org.taxi.entity.enums.PayMethod;
-import org.taxi.filters.PaymentFilter;
-import org.taxi.repository.impl.FilterPaymentRepositoryImpl;
+import org.taxi.dto.filters.PaymentFilter;
 import org.taxi.util.TestObjectsUtils;
 
 import java.math.BigDecimal;

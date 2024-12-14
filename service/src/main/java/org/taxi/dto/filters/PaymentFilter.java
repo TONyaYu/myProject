@@ -1,4 +1,4 @@
-package org.taxi.filters;
+package org.taxi.dto.filters;
 
 import lombok.Builder;
 import lombok.Value;

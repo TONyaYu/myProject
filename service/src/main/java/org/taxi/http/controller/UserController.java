@@ -1,4 +1,4 @@
-package org.taxi.controller;
+package org.taxi.http.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -13,8 +14,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.taxi.dto.PageResponse;
 import org.taxi.dto.UserCreateEditDto;
 import org.taxi.dto.UserReadDto;
+import org.taxi.dto.filters.UserFilter;
 import org.taxi.entity.enums.Role;
-import org.taxi.filters.UserFilter;
 import org.taxi.service.UserService;
 
 @Controller
@@ -52,11 +53,11 @@ public class UserController {
 
     @PostMapping
     public String create(@ModelAttribute @Validated UserCreateEditDto user,
-                         RedirectAttributes redirectAttributes) {
-        if (true) {
-//            redirectAttributes.addAttribute("username", user.getLastname());
-//            redirectAttributes.addAttribute("firstname", user.getFirstname());
+                         RedirectAttributes redirectAttributes,
+                         BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("user", user);
+            redirectAttributes.addFlashAttribute("error", bindingResult.getAllErrors());
             return "redirect:/users/registration";
         }
         return "redirect:/users/" + userService.create(user).getId();
