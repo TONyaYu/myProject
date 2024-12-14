@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -50,7 +51,8 @@ public class UserController {
     }
 
     @PostMapping
-    public String create(@ModelAttribute UserCreateEditDto user, RedirectAttributes redirectAttributes) {
+    public String create(@ModelAttribute @Validated UserCreateEditDto user,
+                         RedirectAttributes redirectAttributes) {
         if (true) {
 //            redirectAttributes.addAttribute("username", user.getLastname());
 //            redirectAttributes.addAttribute("firstname", user.getFirstname());

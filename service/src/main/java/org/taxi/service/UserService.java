@@ -1,13 +1,11 @@
 package org.taxi.service;
 
+import com.querydsl.core.types.Predicate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.taxi.dto.UserCreateEditDto;
 import org.taxi.dto.UserReadDto;
 import org.taxi.filters.UserFilter;
@@ -31,12 +29,12 @@ public class UserService {
     private final UserCreateEditMapper userCreateEditMapper;
 
     public Page<UserReadDto> findAll(UserFilter filter, Pageable pageable) {
-        var predicate = QueryDslPredicate.builder()
+        Predicate predicate = QueryDslPredicate.builder()
                 .add(filter.getFirstname(), user.firstName::containsIgnoreCase)
                 .add(filter.getLastname(), user.lastName::containsIgnoreCase)
                 .add(filter.getEmail(), user.email::containsIgnoreCase)
                 .add(filter.getPhone(), user.phone::contains)
-                .buildAnd();
+                .buildOr();
 
         return userRepository.findAll(predicate, pageable)
                 .map(userReadMapper::map);

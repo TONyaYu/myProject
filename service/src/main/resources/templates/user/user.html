@@ -5,18 +5,18 @@
   <title>User</title>
 </head>
 <body>
-<form th:action="@{/users/{userId}/update(userId=${user.id})}" method="post" th:object="${user}">
+<form th:action="@{/users/{userId}/update(userId=${user.id})}" method="post">
   <label for="firstname">Firstname:
-    <input id="firstname" type="text" name="firstname" th:value="*{firstname}">
+    <input id="firstname" type="text" name="firstname" th:value="*{user.firstname}">
   </label><br>
   <label for="lastname">Lastname:
-    <input id="lastname" type="text" name="lastname" th:value="*{lastname}">
+    <input id="lastname" type="text" name="lastname" th:value="*{user.lastname}">
   </label><br>
   <label for="phone">Phone:
-    <input id="phone" type="text" name="phone" th:value="*{phone}">
+    <input id="phone" type="text" name="phone" th:value="*{user.phone}">
   </label><br>
   <label for="email">Email:
-    <input id="email" type="text" name="email" th:value="*{email}">
+    <input id="email" type="text" name="email" th:value="*{user.email}">
   </label><br>
   <div th:each="role : ${roles}">
     <input th:id="${role}" type="radio" name="role" th:value="${role}" th:checked="${role == user.role}">
