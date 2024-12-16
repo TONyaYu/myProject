@@ -47,16 +47,6 @@ public class UserRestController {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
-    @GetMapping("/{id}/avatar")
-    public ResponseEntity<byte[]> findAvatar(@PathVariable("id") Long id) {
-        return userService.findAvatar(id)
-                .map(content -> ok()
-                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_OCTET_STREAM_VALUE)
-                        .contentLength(content.length)
-                        .body(content))
-                .orElseGet(notFound()::build);
-    }
-
     @Operation(
             summary = "Создать нового пользователя",
             description = "Создает нового пользователя на основе переданных данных")

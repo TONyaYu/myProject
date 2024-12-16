@@ -32,7 +32,6 @@ public class UserService {
     private final UserRepository userRepository;
     private final UserReadMapper userReadMapper;
     private final UserCreateEditMapper userCreateEditMapper;
-    private final ImageService imageService;
 
     public Page<UserReadDto> findAll(UserFilter filter, Pageable pageable) {
         Predicate predicate = QueryDslPredicate.builder()
@@ -61,10 +60,7 @@ public class UserService {
     @Transactional
     public UserReadDto create(UserCreateEditDto userDto) {
         return Optional.of(userDto)
-                .map(dto -> {
-                    uploadImage(dto.getImage());
-                    return userCreateEditMapper.map(dto);
-                })
+                .map(userCreateEditMapper::map)
                 .map(userRepository::save)
                 .map(userReadMapper::map)
                 .orElseThrow();
@@ -73,19 +69,9 @@ public class UserService {
     @Transactional
     public Optional<UserReadDto> update(Long id, UserCreateEditDto userDto) {
         return userRepository.findById(id)
-                .map(entity -> {
-                    uploadImage(userDto.getImage());
-                    return userCreateEditMapper.map(userDto, entity);
-                })
+                .map(entity -> userCreateEditMapper.map(userDto, entity))
                 .map(userRepository::saveAndFlush)
                 .map(userReadMapper::map);
-    }
-
-    @SneakyThrows
-    private void uploadImage(MultipartFile image) {
-        if (!image.isEmpty()) {
-            imageService.uploadImage(image.getOriginalFilename(), image.getInputStream());
-        }
     }
 
     @Transactional
@@ -97,12 +83,5 @@ public class UserService {
                     return true;
                 })
                 .orElse(false);
-    }
-
-    public Optional<byte[]> findAvatar(Long id) {
-        return userRepository.findById(id)
-                .map(User::getImage)
-                .filter(StringUtils::hasText)
-                .flatMap(imageService::get);
     }
 }

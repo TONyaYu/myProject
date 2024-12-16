@@ -26,7 +26,6 @@ public class User implements BaseEntity<Long> {
     private String email;
     private String password;
     private String phone;
-    private String image;
     @Enumerated(EnumType.STRING)
     private Role role;
     @Builder.Default

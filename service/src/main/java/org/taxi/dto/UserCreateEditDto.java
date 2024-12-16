@@ -22,5 +22,4 @@ public class UserCreateEditDto {
     Role role;
     @NotBlank
     String password;
-    MultipartFile image;
 }
