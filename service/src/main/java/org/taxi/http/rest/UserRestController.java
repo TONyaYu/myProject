@@ -5,7 +5,10 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +25,10 @@ import org.taxi.dto.UserCreateEditDto;
 import org.taxi.dto.UserReadDto;
 import org.taxi.dto.filters.UserFilter;
 import org.taxi.service.UserService;
+
+import static org.springframework.http.ResponseEntity.noContent;
+import static org.springframework.http.ResponseEntity.notFound;
+import static org.springframework.http.ResponseEntity.ok;
 
 @RestController
 @RequiredArgsConstructor
@@ -46,6 +53,16 @@ public class UserRestController {
     public UserReadDto findById(@PathVariable("id") Long id) {
         return userService.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    }
+
+    @GetMapping("/{id}/avatar")
+    public ResponseEntity<byte[]> findAvatar(@PathVariable("id") Long id) {
+        return userService.findAvatar(id)
+                .map(content -> ok()
+                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_OCTET_STREAM_VALUE)
+                        .contentLength(content.length)
+                        .body(content))
+                .orElseGet(notFound()::build);
     }
 
     @Operation(
@@ -73,9 +90,9 @@ public class UserRestController {
             description = "Удаляет пользователя по указанному ID")
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable("id") Long id) {
-        if (!userService.delete(id)) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
+    public ResponseEntity<?> delete(@PathVariable("id") Long id) {
+        return userService.delete(id)
+                ? noContent().build()
+                : notFound().build();
     }
 }

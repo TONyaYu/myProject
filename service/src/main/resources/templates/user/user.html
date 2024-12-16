@@ -18,6 +18,8 @@
   <label for="email">Email:
     <input id="email" type="text" name="email" th:value="*{user.email}">
   </label><br>
+  <div th:if="${user.image}"
+       <img th:src="@{api/v1/users/{userId}/avatar(user.id)})}" alt="User image">
   <label for="image">Image:
     <input id="image" type="file" name="image">
   </label><br>

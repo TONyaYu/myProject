@@ -7,10 +7,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.taxi.dto.UserCreateEditDto;
 import org.taxi.dto.UserReadDto;
 import org.taxi.dto.filters.UserFilter;
+import org.taxi.entity.User;
 import org.taxi.mapper.UserCreateEditMapper;
 import org.taxi.mapper.UserReadMapper;
 import org.taxi.repository.UserRepository;
@@ -20,6 +22,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.taxi.entity.QUser.user;
+
 
 @Service
 @RequiredArgsConstructor
@@ -94,5 +97,12 @@ public class UserService {
                     return true;
                 })
                 .orElse(false);
+    }
+
+    public Optional<byte[]> findAvatar(Long id) {
+        return userRepository.findById(id)
+                .map(User::getImage)
+                .filter(StringUtils::hasText)
+                .flatMap(imageService::get);
     }
 }
