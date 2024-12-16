@@ -6,10 +6,9 @@ import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.taxi.entity.Payment;
 import org.taxi.repository.FilterPaymentRepository;
-import org.taxi.filters.PaymentFilter;
+import org.taxi.dto.filters.PaymentFilter;
 import org.taxi.util.QueryDslPredicate;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.taxi.entity.QPayment.payment;

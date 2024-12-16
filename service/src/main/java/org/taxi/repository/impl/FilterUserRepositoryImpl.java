@@ -4,15 +4,13 @@ import com.querydsl.core.types.Predicate;
 import com.querydsl.jpa.impl.JPAQuery;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
-import org.taxi.entity.QUser;
 import org.taxi.entity.User;
-import org.taxi.filters.UserFilter;
+import org.taxi.dto.filters.UserFilter;
 import org.taxi.repository.FilterUserRepository;
 import org.taxi.util.QueryDslPredicate;
 
 import java.util.List;
 
-import static org.taxi.entity.QRide.ride;
 import static org.taxi.entity.QUser.user;
 
 @RequiredArgsConstructor

@@ -1,6 +1,7 @@
-package org.taxi.filters;
+package org.taxi.dto.filters;
 
 import lombok.Value;
+import org.taxi.entity.enums.Role;
 
 @Value
 public class UserFilter {
@@ -8,4 +9,5 @@ public class UserFilter {
     String lastname;
     String email;
     String phone;
+    Role role;
 }

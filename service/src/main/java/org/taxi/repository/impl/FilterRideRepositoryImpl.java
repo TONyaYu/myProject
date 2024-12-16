@@ -5,7 +5,7 @@ import com.querydsl.jpa.impl.JPAQuery;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.taxi.entity.Ride;
-import org.taxi.filters.RideFilter;
+import org.taxi.dto.filters.RideFilter;
 import org.taxi.repository.FilterRideRepository;
 import org.taxi.util.QueryDslPredicate;
 

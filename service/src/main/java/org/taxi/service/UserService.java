@@ -2,13 +2,17 @@ package org.taxi.service;
 
 import com.querydsl.core.types.Predicate;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 import org.taxi.dto.UserCreateEditDto;
 import org.taxi.dto.UserReadDto;
-import org.taxi.filters.UserFilter;
+import org.taxi.dto.filters.UserFilter;
+import org.taxi.entity.User;
 import org.taxi.mapper.UserCreateEditMapper;
 import org.taxi.mapper.UserReadMapper;
 import org.taxi.repository.UserRepository;
@@ -18,6 +22,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.taxi.entity.QUser.user;
+
 
 @Service
 @RequiredArgsConstructor
@@ -34,6 +39,7 @@ public class UserService {
                 .add(filter.getLastname(), user.lastName::containsIgnoreCase)
                 .add(filter.getEmail(), user.email::containsIgnoreCase)
                 .add(filter.getPhone(), user.phone::contains)
+                .add(filter.getRole(), user.role::eq)
                 .buildOr();
 
         return userRepository.findAll(predicate, pageable)

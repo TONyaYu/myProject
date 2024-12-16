@@ -7,7 +7,8 @@ import org.taxi.entity.User;
 
 public interface UserRepository extends JpaRepository<User, Long>,
         QuerydslPredicateExecutor<User>,
-        FilterUserRepository, RevisionRepository<User, Long, Integer> {
+        FilterUserRepository,
+        RevisionRepository<User, Long, Integer> {
 }
 
 
