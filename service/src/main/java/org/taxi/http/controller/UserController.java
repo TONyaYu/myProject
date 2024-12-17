@@ -39,7 +39,7 @@ public class UserController {
                 .map(user -> {
                     model.addAttribute("user", user);
                     model.addAttribute("roles", Role.values());
-                    return "user/users";
+                    return "user/user";
                 })
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
@@ -47,7 +47,7 @@ public class UserController {
     @GetMapping("/registration")
     public String registration(Model model, @ModelAttribute("user") UserCreateEditDto user) {
         model.addAttribute("user", user);
-        model.addAttribute("roles", Role.values());
+//        model.addAttribute("roles", Role.values());
         return "user/registration";
     }
 
@@ -55,18 +55,20 @@ public class UserController {
     public String create(@ModelAttribute @Validated UserCreateEditDto user,
                          RedirectAttributes redirectAttributes,
                          BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            redirectAttributes.addFlashAttribute("user", user);
-            redirectAttributes.addFlashAttribute("error", bindingResult.getAllErrors());
-            return "redirect:/users/registration";
-        }
-        return "redirect:/users/" + userService.create(user).getId();
+        userService.create(user);
+//        if (bindingResult.hasErrors()) {
+//            redirectAttributes.addFlashAttribute("user", user);
+//            redirectAttributes.addFlashAttribute("error", bindingResult.getAllErrors());
+//            return "redirect:/users/registration";
+//        }
+        return "redirect:/users" ;
+//                + userService.create(user).getId();
     }
 
     @PostMapping("/{id}/update")
-    public String update(@PathVariable("id") Long id, @ModelAttribute UserCreateEditDto users) {
-        return userService.update(id, users)
-                .map(it -> "redirect:/users/{id}")
+    public String update(@PathVariable("id") Long id, @ModelAttribute UserCreateEditDto user) {
+        return userService.update(id, user)
+                .map(it -> "redirect:/user/{id}")
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 

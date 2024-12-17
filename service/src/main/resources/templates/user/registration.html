@@ -21,9 +21,6 @@
     <label for="password">Password:
         <input id="password" type="password" name="password" th:value="*{password}">
     </label><br>
-    <label for="image">Image:
-        <input id="image" type="file" name="image">
-    </label><br>
     <div th:each="role : ${roles}">
         <input th:id="${role}" type="radio" name="role" th:value="${role}" th:checked="${role == user.role}">
         <label th:for="${role}" th:text="${role}">Role name</label>

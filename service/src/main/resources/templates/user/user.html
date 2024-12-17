@@ -18,9 +18,9 @@
   <label for="email">Email:
     <input id="email" type="text" name="email" th:value="*{user.email}">
   </label><br>
-  <div th:each="role : ${roles}">
-    <input th:id="${role}" type="radio" name="role" th:value="${role}" th:checked="${role == user.role}">
-    <label th:for="${role}" th:text="${role}">Role</label>
+  <div th:each="roles : ${roles}">
+    <input th:id="${roles}" type="radio" name="role" th:value="${roles}" th:checked="${roles == user.role}">
+    <label th:for="${roles}" th:text="${roles}">Role</label>
   </div>
   <button type="submit">Update</button>
 </form>

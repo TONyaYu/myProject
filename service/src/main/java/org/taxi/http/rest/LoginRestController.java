@@ -1,4 +1,4 @@
-package org.taxi.http.controller;
+package org.taxi.http.rest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,9 +8,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.taxi.dto.LoginDto;
 
+
 @Controller
-@RequestMapping("/login")
-public class LoginController {
+@RequestMapping("/api/v1/login")
+public class LoginRestController {
 
     @GetMapping
     public String loginPage(@ModelAttribute("user") LoginDto loginDto) {
