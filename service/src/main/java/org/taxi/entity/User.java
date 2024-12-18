@@ -37,10 +37,5 @@ public class User implements BaseEntity<Long> {
     @Builder.Default
     @OneToMany(mappedBy = "user")
     private List<Review> reviews = new ArrayList<>();
-
-    @Override
-    public Long getId() {
-        return this.id;
-    }
 }
 

@@ -16,6 +16,8 @@ import org.taxi.dto.filters.UserFilter;
 import org.taxi.entity.enums.Role;
 import org.taxi.service.UserService;
 
+import java.util.Optional;
+
 @Controller
 @RequestMapping("/users")
 @RequiredArgsConstructor
@@ -52,7 +54,17 @@ public class UserController {
     @PostMapping
     public String create(@ModelAttribute @Validated UserCreateEditDto user) {
         userService.create(user);
-        return "redirect:/users" + userService.create(user).getId();
+        return "redirect:/users/" + userService.create(user).getId();
+    }
+
+    @GetMapping("/{id}/update")
+    public String getUpdateForm(@PathVariable("id") Long id, Model model) {
+        return userService.findById(id)
+                .map(user -> {
+                    model.addAttribute("user", user);
+                    return "user/edituser";
+                })
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
     @PostMapping("/{id}/update")

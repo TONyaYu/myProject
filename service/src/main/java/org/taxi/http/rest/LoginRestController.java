@@ -17,9 +17,4 @@ public class LoginRestController {
     public String loginPage(@ModelAttribute("user") LoginDto loginDto) {
         return "user/login";
     }
-
-    @PostMapping
-    public String login(Model model, @ModelAttribute("login") LoginDto loginDto) {
-        return "user/login";
-    }
 }
