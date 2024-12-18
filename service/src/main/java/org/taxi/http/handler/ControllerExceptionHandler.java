@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice(basePackages = "org.taxi.http.controller")
 public class ControllerExceptionHandler {
 
-    @ExceptionHandler(Exception.class)
-    public String handleException(Exception e, HttpServletRequest request) {
-        log.error("Failed to return response", e);
-        return "error/error500";
-    }
+//    @ExceptionHandler(Exception.class)
+//    public String handleException(Exception e, HttpServletRequest request) {
+//        log.error("Failed to return response", e);
+//        return "error/error500";
+//    }
 }

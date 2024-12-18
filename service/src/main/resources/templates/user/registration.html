@@ -21,10 +21,6 @@
     <label for="password">Password:
         <input id="password" type="password" name="password" th:value="*{password}">
     </label><br>
-    <div th:each="role : ${roles}">
-        <input th:id="${role}" type="radio" name="role" th:value="${role}" th:checked="${role == user.role}">
-        <label th:for="${role}" th:text="${role}">Role name</label>
-    </div>
     <button type="submit">Register</button>
 </form>
 <div th:if="${errors}">
