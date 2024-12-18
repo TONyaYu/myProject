@@ -59,8 +59,8 @@ public class UserRestController {
             description = "Обновляет данные пользователя по указанному ID")
     @PutMapping("/{id}")
     public UserReadDto update(@PathVariable("id") Long id,
-                              @Validated @RequestBody UserCreateEditDto users) {
-        return userService.update(id, users)
+                              @Validated @RequestBody UserCreateEditDto user) {
+        return userService.update(id, user)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 

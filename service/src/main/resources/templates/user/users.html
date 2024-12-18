@@ -7,16 +7,16 @@
 <body>
 <form action="/users">
     <label for="firstname">Firstname:
-        <input id="firstname" type="text" name="firstname" th:value="${filter.firstname()}">
+        <input id="firstname" type="text" name="firstname" th:value="${filter.firstname}">
     </label>
     <label for="lastname">Lastname:
-        <input id="lastname" type="text" name="lastname" th:value="${filter.lastname()}">
+        <input id="lastname" type="text" name="lastname" th:value="${filter.lastname}">
     </label>
     <label for="email">Email:
-        <input id="email" type="text" name="email" th:value="${filter.email()}">
+        <input id="email" type="text" name="email" th:value="${filter.email}">
     </label>
     <label for="phone">Phone:
-        <input id="phone" type="text" name="phone" th:value="${filter.phone()}">
+        <input id="phone" type="text" name="phone" th:value="${filter.phone}">
     </label>
     <div>
         <label for="page">Page:
@@ -28,7 +28,7 @@
     </div>
     <button type="submit">Filter</button>
 </form>
-<div th:each="user : ${users}">
+<div th:each="user : ${users.content}">
     <a th:href="@{'/users/' + ${user.id}}" th:text="|${user.id}. ${user.firstname}|">User</a>
 </div>
 </body>
