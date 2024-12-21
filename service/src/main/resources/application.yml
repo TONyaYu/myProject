@@ -8,10 +8,6 @@ spring:
     password: pass
     driver-class-name: org.postgresql.Driver
 
-  liquibase:
-    default-schema: taxi_schema
-
-
   jpa:
     show-sql: true
     properties:

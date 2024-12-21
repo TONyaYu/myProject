@@ -14,7 +14,9 @@ import java.util.List;
 @ToString(exclude = {"rides", "reviews", "userCars"})
 @EqualsAndHashCode(of = {"email", "phone", "lastName", "firstName"})
 @Entity
-@Table(name = "users")
+@Table(name = "users", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"email"})
+})
 public class User implements BaseEntity<Long> {
 
     @Id
