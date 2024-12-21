@@ -11,6 +11,7 @@ import org.taxi.entity.enums.Role;
 @Value
 @FieldNameConstants
 public class UserCreateEditDto {
+    Long id;
     @NotBlank
     @Size(min = 3, max = 70)
     String firstname;

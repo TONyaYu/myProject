@@ -30,6 +30,11 @@
 </form>
 <div th:each="user : ${users.content}">
     <a th:href="@{'/users/' + ${user.id}}" th:text="|${user.id}. ${user.firstname}|">User</a>
+
+    <form th:action="@{/users/{id}/delete(id=${user.id})}" method="post"
+          th:if="${user.role == 'ADMIN'}">
+        <button type="submit">Delete</button>
+    </form>
 </div>
 </body>
 </html>

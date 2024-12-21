@@ -2,13 +2,10 @@ package org.taxi.service;
 
 import com.querydsl.core.types.Predicate;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
-import org.springframework.web.multipart.MultipartFile;
 import org.taxi.dto.UserCreateEditDto;
 import org.taxi.dto.UserReadDto;
 import org.taxi.dto.filters.UserFilter;
@@ -59,6 +56,12 @@ public class UserService {
 
     @Transactional
     public UserReadDto create(UserCreateEditDto userDto) {
+        // Проверяем, существует ли уже пользователь с таким email
+        if (userRepository.existsByEmail(userDto.getEmail())) {
+            throw new IllegalArgumentException("User with email " + userDto.getEmail() + " already exists");
+        }
+
+        // Создаем нового пользователя
         return Optional.of(userDto)
                 .map(userCreateEditMapper::map)
                 .map(userRepository::save)
@@ -83,5 +86,9 @@ public class UserService {
                     return true;
                 })
                 .orElse(false);
+    }
+
+    public Optional<User> findByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 }
