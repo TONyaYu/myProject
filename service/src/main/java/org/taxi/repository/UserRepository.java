@@ -14,6 +14,8 @@ public interface UserRepository extends
         RevisionRepository<User, Long, Integer> {
 
     Optional<User> findByEmail(String email);
+
+    boolean existsByEmail(String email);
 }
 
 

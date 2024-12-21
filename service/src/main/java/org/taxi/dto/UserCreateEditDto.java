@@ -12,6 +12,8 @@ import org.taxi.entity.enums.Role;
 @RequiredArgsConstructor
 @FieldNameConstants
 public class UserCreateEditDto {
+    Long id;
+    @NotBlank
     @NotBlank(message = "First name is required")
     @Size(min = 3, max = 70)
     String firstname;

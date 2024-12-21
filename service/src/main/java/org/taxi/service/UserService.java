@@ -4,7 +4,6 @@ import com.querydsl.core.types.Predicate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -60,6 +59,12 @@ public class UserService implements UserDetailsService {
 
     @Transactional
     public UserReadDto create(UserCreateEditDto userDto) {
+        // Проверяем, существует ли уже пользователь с таким email
+        if (userRepository.existsByEmail(userDto.getEmail())) {
+            throw new IllegalArgumentException("User with email " + userDto.getEmail() + " already exists");
+        }
+
+        // Создаем нового пользователя
         return Optional.of(userDto)
                 .map(userCreateEditMapper::map)
                 .map(userRepository::save)
@@ -84,6 +89,10 @@ public class UserService implements UserDetailsService {
                     return true;
                 })
                 .orElse(false);
+    }
+
+    public Optional<org.taxi.entity.User> findByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 
     @Override
