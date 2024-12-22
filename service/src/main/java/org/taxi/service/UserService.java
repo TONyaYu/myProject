@@ -96,13 +96,13 @@ public class UserService implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findByEmail(username)
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        return userRepository.findByEmail(email)
                 .map(user -> new org.springframework.security.core.userdetails.User(
                         user.getEmail(),
                         user.getPassword(),
                         Collections.singleton(user.getRole())
                 ))
-                .orElseThrow(() -> new UsernameNotFoundException("Failed to retrieve user: " + username));
+                .orElseThrow(() -> new UsernameNotFoundException("Failed to retrieve user: " + email));
     }
 }

@@ -89,13 +89,12 @@ public class UserController {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
-        //    @DeleteMapping("/{id}")
-        @PostMapping("/{id}/delete")
-        public String delete (@PathVariable("id") Long id){
-            if (!userService.delete(id)) {
-                throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-            }
-            return "redirect:/users";
+    //    @DeleteMapping("/{id}")
+    @PostMapping("/{id}/delete")
+    public String delete(@PathVariable("id") Long id) {
+        if (!userService.delete(id)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
+        return "redirect:/users";
     }
 }
